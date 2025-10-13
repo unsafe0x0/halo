@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+:root {
+  --primary: #faf9f5;
+  --secondary: #171717;
+  --muted: #303030;
+  --card: #faf9f5;
+  --border: #dad9d4;
+  --accent: #c96442;
+  --accent-hover: #b4552d;
+  --destructive: #d93025;
+  --destructive-hover: #b5241a;
+  --grid: #dddddd;
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+.dark {
+  --primary: #262624;
+  --secondary: #faf9f5;
+  --muted: #c3c0b6;
+  --card: #262624;
+  --border: #3e3e38;
+  --accent: #c96442;
+  --accent-hover: #b4552d;
+  --destructive: #d93025;
+  --destructive-hover: #b5241a;
+  --grid: #444444;
+}
+
+@theme inline {
+  --font-primary: var(--font-primary);
+  --font-secondary: var(--font-secondary);
+
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-card: var(--card);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-destructive: var(--destructive);
+  --color-destructive-hover: var(--destructive-hover);
+  --color-grid: var(--grid);
+}
+
+body {
+  background: var(--primary);
+  color: var(--secondary);
+  font-family: var(--font-primary);
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
