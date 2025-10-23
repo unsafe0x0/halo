@@ -8,7 +8,7 @@ interface ThemeProviderProps {
   enableSystem?: boolean;
 }
 
-export function ThemeProvider({
+export default function ThemeProvider({
   children,
   defaultTheme = "system",
   enableSystem = true,

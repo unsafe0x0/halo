@@ -16,10 +16,10 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 .dark {
-  --primary: #262624;
+  --primary: #202020;
   --secondary: #faf9f5;
   --muted: #c3c0b6;
-  --card: #262624;
+  --card: #222222;
   --border: #3e3e38;
   --accent: #c96442;
   --accent-hover: #b4552d;
