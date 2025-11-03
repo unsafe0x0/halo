@@ -33,7 +33,7 @@ const Features = () => {
   ];
 
   return (
-    <section id="features" className="border-b border-border">
+    <section id="features" className="">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-24">
         <motion.div
           className="mb-12 sm:mb-16 text-center"
@@ -50,7 +50,7 @@ const Features = () => {
           </p>
         </motion.div>
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 items-stretch justify-center w-full"
           variants={cardContainerVariants}
           initial="hidden"
           whileInView="visible"
@@ -60,9 +60,12 @@ const Features = () => {
             const Icon = feature.icon;
             return (
               <motion.div key={feature.title} variants={itemSlideUpVariants}>
-                <Card>
+                <Card className="rounded h-full w-full">
                   <CardHeader>
-                    <Icon className="w-8 h-8 text-primary mb-4" />
+                    <Icon
+                      size={40}
+                      className="p-1 text-primary mb-4 bg-primary/20 border border-primary rounded"
+                    />
                     <CardTitle className="text-lg sm:text-xl">
                       {feature.title}
                     </CardTitle>

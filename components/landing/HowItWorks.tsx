@@ -32,7 +32,7 @@ const HowItWorks = () => {
   ];
 
   return (
-    <section id="how-it-works" className="border-b border-border">
+    <section id="how-it-works" className="">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-24">
         <motion.div
           className="mb-12 sm:mb-16 text-center"
@@ -50,7 +50,7 @@ const HowItWorks = () => {
         </motion.div>
 
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 items-stretch justify-center w-full"
           variants={cardContainerVariants}
           initial="hidden"
           whileInView="visible"
@@ -58,9 +58,9 @@ const HowItWorks = () => {
         >
           {steps.map((step, index) => (
             <motion.div key={index} variants={itemSlideUpVariants}>
-              <Card>
+              <Card className="rounded h-full w-full">
                 <CardHeader>
-                  <span className="text-xs sm:text-sm font-semibold text-primary bg-primary/10 px-3 py-1 w-fit mb-3">
+                  <span className="text-xs sm:text-sm font-semibold text-primary bg-primary/10 px-3 py-1 w-fit mb-3 rounded">
                     Step {step.number}
                   </span>
                   <CardTitle className="text-lg sm:text-2xl">

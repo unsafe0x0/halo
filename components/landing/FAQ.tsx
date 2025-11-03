@@ -49,7 +49,7 @@ const FAQ = () => {
   ];
 
   return (
-    <section id="faq" className="border-b border-border">
+    <section id="faq" className="">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-24">
         <motion.div
           className="mb-12 sm:mb-16 text-center"
@@ -75,7 +75,10 @@ const FAQ = () => {
           <Accordion type="single" collapsible className="w-full space-y-2">
             {faqs.map((faq, index) => (
               <motion.div key={index} variants={itemFastVariants}>
-                <AccordionItem value={`item-${index}`}>
+                <AccordionItem
+                  value={`item-${index}`}
+                  className="rounded overflow-hidden"
+                >
                   <AccordionTrigger className="text-left text-sm sm:text-base">
                     {faq.question}
                   </AccordionTrigger>

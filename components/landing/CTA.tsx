@@ -12,8 +12,8 @@ const CTA = () => {
   const { containerVariants, itemLargeSlideVariants } = useAnimationVariants();
 
   return (
-    <section className="border-t border-border">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-24 text-center">
+    <section className="mb-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-24 text-center bg-card rounded-lg">
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -36,8 +36,8 @@ const CTA = () => {
             className="flex gap-4 justify-center"
             variants={itemLargeSlideVariants}
           >
-            <Button className="bg-primary text-primary-foreground px-6 sm:px-8 py-4 sm:py-6 text-sm sm:text-base">
-              Try for free <ArrowRight className="ml-2 w-4 h-4" />
+            <Button className="bg-primary text-primary-foreground px-6 sm:px-8 py-4 sm:py-6 text-sm sm:text-base rounded">
+              Try for free <ArrowRight size={18} />
             </Button>
           </motion.div>
         </motion.div>
