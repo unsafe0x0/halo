@@ -27,7 +27,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="light" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <body className={`${primary.variable} ${secondary.variable} antialiased`}>
         <ThemeProvider>
           <AuthProvider>
