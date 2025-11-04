@@ -1,50 +1,47 @@
 "use client";
 
 import React from "react";
-import {
-  TargetIcon,
-  BarChartIcon,
-  SpeakerLoudIcon,
-  BookmarkIcon,
-  LightningBoltIcon,
-  CheckCircledIcon,
-  DotIcon,
-} from "@radix-ui/react-icons";
+import { IoBookmark } from "react-icons/io5";
+import { PiSpeakerHighBold } from "react-icons/pi";
+import { BiSolidBarChartAlt2 } from "react-icons/bi";
+import { FaRegCheckCircle } from "react-icons/fa";
+import { LuTarget } from "react-icons/lu";
+import { FiZap } from "react-icons/fi";
 
 const Features = () => {
   const features = [
     {
-      icon: CheckCircledIcon,
+      icon: FaRegCheckCircle,
       title: "AI-Powered Feedback",
       description:
         "Get instant, detailed feedback on your interview responses with AI-driven analysis.",
     },
     {
-      icon: TargetIcon,
+      icon: LuTarget,
       title: "Realistic Practice",
       description:
         "Practice with questions from real interviews at top companies and industries.",
     },
     {
-      icon: BarChartIcon,
+      icon: BiSolidBarChartAlt2,
       title: "Performance Analytics",
       description:
         "Track your progress with detailed metrics and improvement suggestions.",
     },
     {
-      icon: SpeakerLoudIcon,
+      icon: PiSpeakerHighBold,
       title: "Voice & Video Mode",
       description:
         "Practice with both voice and video to prepare for actual interviews.",
     },
     {
-      icon: BookmarkIcon,
+      icon: IoBookmark,
       title: "Curated Content",
       description:
         "Access to a library of interview questions, tips, and best practices.",
     },
     {
-      icon: LightningBoltIcon,
+      icon: FiZap,
       title: "Real-Time Scoring",
       description:
         "Get scored on communication, technical knowledge, and confidence.",
@@ -74,8 +71,7 @@ const Features = () => {
               >
                 <div className="flex flex-col gap-4">
                   <feature.icon
-                    width={38}
-                    height={38}
+                    size={38}
                     className="text-accent-foreground font-bold text-xl p-1.5 rounded-lg bg-accent flex items-center justify-center"
                   />
                   <div className="flex flex-col gap-2">

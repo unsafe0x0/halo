@@ -54,3 +54,7 @@ body {
   color: var(--foreground);
   font-family: var(--font-primary) sans-serif;
 }
+
+::-webkit-scrollbar {
+  display: none;
+}

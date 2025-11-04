@@ -1,12 +1,12 @@
 "use client";
 
 import React from "react";
-import {
-  CheckCircledIcon,
-  BarChartIcon,
-  VideoIcon,
-  ClockIcon,
-} from "@radix-ui/react-icons";
+import { FaRegCheckCircle } from "react-icons/fa";
+import { BiSolidBarChartAlt2 } from "react-icons/bi";
+import { FaVideo } from "react-icons/fa";
+import { AiOutlineClockCircle } from "react-icons/ai";
+import { FaCheck } from "react-icons/fa6";
+import { FaArrowRight } from "react-icons/fa6";
 
 const BentooGrid = () => {
   return (
@@ -26,11 +26,7 @@ const BentooGrid = () => {
             <div className="p-6 md:p-8 rounded-xl bg-card border border-border hover:ring-2 hover:ring-accent transition-all">
               <div className="space-y-4">
                 <div className="flex items-center gap-3 pb-4 border-b border-border">
-                  <BarChartIcon
-                    width={20}
-                    height={20}
-                    className="text-accent"
-                  />
+                  <BiSolidBarChartAlt2 size={20} className="text-accent" />
                   <h3 className="font-bold">Your Performance</h3>
                 </div>
 
@@ -81,7 +77,7 @@ const BentooGrid = () => {
             <div className="p-6 md:p-8 rounded-xl bg-card border border-border hover:ring-2 hover:ring-accent transition-all">
               <div className="space-y-4">
                 <div className="flex items-center gap-3 pb-4 border-b border-border">
-                  <VideoIcon width={20} height={20} className="text-accent" />
+                  <FaVideo size={20} className="text-accent" />
                   <h3 className="font-bold">Start Interview</h3>
                 </div>
 
@@ -110,11 +106,7 @@ const BentooGrid = () => {
                     </label>
                     <div className="space-y-2">
                       <div className="flex items-center gap-2 px-3 py-2 rounded-md bg-card-1 border border-accent text-foreground text-sm">
-                        <CheckCircledIcon
-                          width={16}
-                          height={16}
-                          className="text-accent"
-                        />
+                        <FaRegCheckCircle size={16} className="text-accent" />
                         Technical
                       </div>
                     </div>
@@ -130,7 +122,7 @@ const BentooGrid = () => {
             <div className="p-6 md:p-8 rounded-xl bg-card border border-border hover:ring-2 hover:ring-accent transition-all">
               <div className="space-y-4">
                 <div className="flex items-center gap-3 pb-4 border-b border-border">
-                  <ClockIcon width={20} height={20} className="text-accent" />
+                  <AiOutlineClockCircle size={20} className="text-accent" />
                   <h3 className="font-bold">Question</h3>
                 </div>
 
@@ -167,18 +159,15 @@ const BentooGrid = () => {
             <div className="p-6 md:p-8 rounded-xl bg-card border border-border hover:ring-2 hover:ring-accent transition-all">
               <div className="space-y-4">
                 <div className="flex items-center gap-3 pb-4 border-b border-border">
-                  <CheckCircledIcon
-                    width={20}
-                    height={20}
-                    className="text-accent"
-                  />
+                  <FaRegCheckCircle size={20} className="text-accent" />
                   <h3 className="font-bold">AI Feedback</h3>
                 </div>
 
                 <div className="space-y-3">
                   <div className="p-3 bg-accent/10 rounded-md border border-accent/30">
                     <p className="text-sm font-medium text-accent mb-1">
-                      ✓ Strengths
+                      <FaCheck className="inline mr-1" />
+                      Strengths
                     </p>
                     <p className="text-xs text-foreground-1">
                       Clear problem articulation and logical approach
@@ -187,7 +176,8 @@ const BentooGrid = () => {
 
                   <div className="p-3 bg-yellow-500/10 rounded-md border border-yellow-500/30">
                     <p className="text-sm font-medium text-yellow-600 mb-1">
-                      → Improve
+                      <FaArrowRight className="inline mr-1" />
+                      Improve
                     </p>
                     <p className="text-xs text-foreground-1">
                       Add more specific metrics and timelines
