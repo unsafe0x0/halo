@@ -1,23 +1,23 @@
 import React from "react";
-import Navigation from "@/components/landing/Navigation";
-import Hero from "@/components/landing/Hero";
+import Navbar from "@/components/common/Navbar";
+import HeroSection from "@/components/landing/HeroSection";
 import Features from "@/components/landing/Features";
 import HowItWorks from "@/components/landing/HowItWorks";
-import FAQ from "@/components/landing/FAQ";
-import CTA from "@/components/landing/CTA";
-import Footer from "@/components/landing/Footer";
+import BentooGrid from "@/components/landing/BentooGrid";
+import Cta from "@/components/landing/Cta";
+import Footer from "@/components/common/Footer";
 
 const LandingPage = () => {
   return (
-    <div className="bg-background text-foreground">
-      <Navigation />
-      <Hero />
+    <main className="bg-background text-foreground">
+      <Navbar />
+      <HeroSection />
       <Features />
       <HowItWorks />
-      <FAQ />
-      <CTA />
+      <BentooGrid />
+      <Cta />
       <Footer />
-    </div>
+    </main>
   );
 };
 

@@ -1,81 +1,71 @@
 "use client";
+
 import React from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { motion } from "framer-motion";
-import {
-  useAnimationVariants,
-  defaultViewportSettings,
-} from "@/hooks/useAnimationVariants";
+import { CheckCircledIcon, RocketIcon, GearIcon } from "@radix-ui/react-icons";
 
 const HowItWorks = () => {
-  const { cardContainerVariants, itemSlideUpVariants } = useAnimationVariants();
-
   const steps = [
     {
       number: "01",
-      title: "Pick a role",
+      title: "Choose Your Role",
       description:
-        "Search for the job you're going after. We've got questions from hundreds of companies and roles.",
+        "Select the job role and company you're interviewing for to customize your practice session.",
     },
     {
       number: "02",
-      title: "Practice",
+      title: "Get AI Questions",
       description:
-        "Talk to our AI interviewer. It listens, follows up, and challenges you just like a real interview.",
+        "Receive AI-generated interview questions tailored to your role and experience level.",
     },
     {
       number: "03",
-      title: "Get smarter",
+      title: "Practice & Record",
       description:
-        "See what you did well and what you need to work on. Practice again. Keep getting better.",
+        "Answer questions in real-time with voice or video recording for authentic practice.",
+    },
+    {
+      number: "04",
+      title: "Get Feedback",
+      description:
+        "Receive detailed AI feedback on your responses, delivery, and areas for improvement.",
     },
   ];
 
   return (
-    <section id="how-it-works" className="">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-24">
-        <motion.div
-          className="mb-12 sm:mb-16 text-center"
-          variants={itemSlideUpVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={defaultViewportSettings}
-        >
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tighter mb-3 sm:mb-4">
-            Just three steps
-          </h2>
-          <p className="text-base sm:text-lg text-muted-foreground px-4">
-            From signup to your next job offer
-          </p>
-        </motion.div>
-
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 items-stretch justify-center w-full"
-          variants={cardContainerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={defaultViewportSettings}
-        >
-          {steps.map((step, index) => (
-            <motion.div key={index} variants={itemSlideUpVariants}>
-              <Card className="rounded h-full w-full">
-                <CardHeader>
-                  <span className="text-xs sm:text-sm font-semibold text-primary bg-primary/10 px-3 py-1 w-fit mb-3 rounded">
-                    Step {step.number}
-                  </span>
-                  <CardTitle className="text-lg sm:text-2xl">
-                    {step.title}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                    {step.description}
-                  </p>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
-        </motion.div>
+    <section id="how-it-works" className="py-20 md:py-32">
+      <div className="max-w-7xl mx-auto px-4 md:px-6">
+        <div className="flex flex-col gap-16">
+          <div className="flex flex-col gap-4 text-center">
+            <h2 className="text-3xl md:text-5xl font-bold leading-tight">
+              Four Simple Steps to Success
+            </h2>
+            <p className="text-lg text-foreground-1 max-w-2xl mx-auto">
+              Get started with Halo in minutes and begin your interview
+              preparation journey.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-4 w-full">
+            {steps.map((step, index) => (
+              <div key={index} className="relative group">
+                <div className="flex flex-col gap-4 h-full p-6 rounded-xl bg-card border border-border hover:ring-2 hover:ring-accent transition-all duration-300">
+                  <div className="relative">
+                    <span className="text-accent-foreground font-bold text-xl w-10 h-10 rounded-full bg-accent flex items-center justify-center">
+                      {step.number}
+                    </span>
+                  </div>
+                  <div className="flex flex-col gap-3 flex-1">
+                    <h3 className="text-lg font-bold text-foreground">
+                      {step.title}
+                    </h3>
+                    <p className="text-sm text-foreground-1 leading-relaxed">
+                      {step.description}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );

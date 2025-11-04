@@ -1,85 +1,94 @@
 "use client";
+
 import React from "react";
-import { Zap, Brain, BarChart3 } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { motion } from "framer-motion";
 import {
-  useAnimationVariants,
-  defaultViewportSettings,
-} from "@/hooks/useAnimationVariants";
+  TargetIcon,
+  BarChartIcon,
+  SpeakerLoudIcon,
+  BookmarkIcon,
+  LightningBoltIcon,
+  CheckCircledIcon,
+  DotIcon,
+} from "@radix-ui/react-icons";
 
 const Features = () => {
-  const { cardContainerVariants, itemSlideUpVariants } = useAnimationVariants();
-
   const features = [
     {
-      icon: Zap,
-      title: "Instant Feedback",
+      icon: CheckCircledIcon,
+      title: "AI-Powered Feedback",
       description:
-        "See exactly how you did right after each practice session. Know your strengths and what to work on.",
+        "Get instant, detailed feedback on your interview responses with AI-driven analysis.",
     },
     {
-      icon: Brain,
-      title: "Real Questions",
+      icon: TargetIcon,
+      title: "Realistic Practice",
       description:
-        "Questions from actual interviews. The AI learns and adapts to make each session more relevant.",
+        "Practice with questions from real interviews at top companies and industries.",
     },
     {
-      icon: BarChart3,
-      title: "Track Progress",
+      icon: BarChartIcon,
+      title: "Performance Analytics",
       description:
-        "Watch yourself improve. See your scores go up and get confident before the real thing.",
+        "Track your progress with detailed metrics and improvement suggestions.",
+    },
+    {
+      icon: SpeakerLoudIcon,
+      title: "Voice & Video Mode",
+      description:
+        "Practice with both voice and video to prepare for actual interviews.",
+    },
+    {
+      icon: BookmarkIcon,
+      title: "Curated Content",
+      description:
+        "Access to a library of interview questions, tips, and best practices.",
+    },
+    {
+      icon: LightningBoltIcon,
+      title: "Real-Time Scoring",
+      description:
+        "Get scored on communication, technical knowledge, and confidence.",
     },
   ];
 
   return (
-    <section id="features" className="">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-24">
-        <motion.div
-          className="mb-12 sm:mb-16 text-center"
-          variants={itemSlideUpVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={defaultViewportSettings}
-        >
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tighter mb-3 sm:mb-4">
-            What you get
-          </h2>
-          <p className="text-base sm:text-lg text-muted-foreground px-4">
-            Everything to crush your next interview
-          </p>
-        </motion.div>
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 items-stretch justify-center w-full"
-          variants={cardContainerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={defaultViewportSettings}
-        >
-          {features.map((feature) => {
-            const Icon = feature.icon;
-            return (
-              <motion.div key={feature.title} variants={itemSlideUpVariants}>
-                <Card className="rounded h-full w-full">
-                  <CardHeader>
-                    <Icon
-                      size={40}
-                      className="p-1 text-primary mb-4 bg-primary/20 border border-primary rounded"
-                    />
-                    <CardTitle className="text-lg sm:text-xl">
-                      {feature.title}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm sm:text-base text-muted-foreground">
+    <section id="features" className="py-20 md:py-32">
+      <div className="max-w-7xl mx-auto px-4 md:px-6">
+        <div className="flex flex-col gap-16">
+          <div className="flex flex-col gap-4 text-center">
+            <h2 className="text-3xl md:text-5xl font-bold leading-tight">
+              Everything You Need to Succeed
+            </h2>
+
+            <p className="text-lg text-foreground-1 max-w-2xl mx-auto">
+              Comprehensive tools and features designed to help you ace your
+              interviews and land your dream job.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {features.map((feature, index) => (
+              <div
+                key={index}
+                className="group p-6 md:p-8 rounded-xl bg-card border border-border hover:ring-2 hover:ring-accent hover:bg-card-1 transition-all duration-300"
+              >
+                <div className="flex flex-col gap-4">
+                  <feature.icon
+                    width={38}
+                    height={38}
+                    className="text-accent-foreground font-bold text-xl p-1.5 rounded-lg bg-accent flex items-center justify-center"
+                  />
+                  <div className="flex flex-col gap-2">
+                    <h3 className="text-xl font-bold">{feature.title}</h3>
+                    <p className="text-foreground-1 leading-relaxed">
                       {feature.description}
                     </p>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            );
-          })}
-        </motion.div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );

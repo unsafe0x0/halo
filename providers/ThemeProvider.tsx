@@ -10,14 +10,17 @@ interface ThemeProviderProps {
 
 export default function ThemeProvider({
   children,
-  defaultTheme = "system",
-  enableSystem = true,
+  defaultTheme = "light",
+  enableSystem = false,
 }: ThemeProviderProps) {
   return (
     <NextThemesProvider
       attribute="class"
       defaultTheme={defaultTheme}
       enableSystem={enableSystem}
+      storageKey="halo-theme"
+      forcedTheme={undefined}
+      enableColorScheme={false}
     >
       {children}
     </NextThemesProvider>
