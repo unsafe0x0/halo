@@ -82,19 +82,19 @@ export const authOptions: NextAuthOptions = {
         token.email = dbUser.email;
         token.profileImage = dbUser.profileImage;
         token.googleId = dbUser.googleId;
+        token.apiKey = dbUser.apiKey ?? "";
       }
 
       return token;
     },
 
     async session({ session, token }) {
-      if (token) {
-        session.user.id = token.id;
-        session.user.name = token.name;
-        session.user.email = token.email;
-        session.user.profileImage = token.profileImage;
-        session.user.googleId = token.googleId;
-      }
+      session.user.id = token.id;
+      session.user.name = token.name;
+      session.user.email = token.email;
+      session.user.profileImage = token.profileImage;
+      session.user.googleId = token.googleId;
+      session.user.apiKey = token.apiKey ?? "";
       return session;
     },
   },

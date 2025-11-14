@@ -3,6 +3,9 @@
 import React from "react";
 import Chart from "./Chart";
 import InterviewCard from "./InterviewCard";
+import { LuTarget } from "react-icons/lu";
+import { AiOutlineLineChart } from "react-icons/ai";
+import { TiStar } from "react-icons/ti";
 
 interface DashboardTabProps {
   interviews?: Array<{
@@ -40,6 +43,53 @@ const DashboardTab = ({
         </div>
 
         <div className="flex flex-col gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="bg-card border border-border rounded-lg p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-foreground-1 text-sm mb-1">
+                    Total Interviews
+                  </p>
+                  <p className="text-3xl font-bold text-foreground">
+                    {recentInterviews.length}
+                  </p>
+                </div>
+                <LuTarget className="w-10 h-10 text-accent" />
+              </div>
+            </div>
+
+            <div className="bg-card border border-border rounded-lg p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-foreground-1 text-sm mb-1">
+                    Average Score
+                  </p>
+                  <p className="text-3xl font-bold text-foreground">
+                    {recentScores.length > 0
+                      ? (
+                          recentScores.reduce((a, b) => a + b, 0) /
+                          recentScores.length
+                        ).toFixed(1)
+                      : "0"}
+                  </p>
+                </div>
+                <AiOutlineLineChart className="w-10 h-10 text-accent" />
+              </div>
+            </div>
+
+            <div className="bg-card border border-border rounded-lg p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-foreground-1 text-sm mb-1">Best Score</p>
+                  <p className="text-3xl font-bold text-foreground">
+                    {recentScores.length > 0 ? Math.max(...recentScores) : "0"}
+                  </p>
+                </div>
+                <TiStar className="w-10 h-10 text-accent" />
+              </div>
+            </div>
+          </div>
+
           <div>
             <h2 className="text-xl font-bold text-foreground mb-4">
               Recent Interviews

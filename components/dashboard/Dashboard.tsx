@@ -77,6 +77,7 @@ const Dashboard = () => {
                 email: data?.user?.email,
                 profileImage: data?.user?.profileImage,
                 githubUsername: data?.user?.githubUsername,
+                apiKey: data?.user?.apiKey,
               }}
             />
           </div>

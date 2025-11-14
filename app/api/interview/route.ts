@@ -5,10 +5,8 @@ import type {
   ChatCompletionRole,
   ChatCompletionSystemMessageParam,
 } from "groq-sdk/resources/chat/completions.js";
-
-const client = new Groq({
-  apiKey: process.env.GROQ_API_KEY,
-});
+import { getServerSession } from "next-auth";
+import { authOptions } from "../auth/[...nextauth]/options";
 
 interface ReviewMessage {
   role: "user" | "assistant" | "ai";
@@ -28,6 +26,12 @@ function removeThinkTags(text: string) {
 
 export async function POST(req: NextRequest) {
   try {
+    const session = await getServerSession(authOptions);
+
+    const client = new Groq({
+      apiKey: session?.user?.apiKey || process.env.GROQ_API_KEY!,
+    });
+
     const payload: OutcomePayload = await req.json();
 
     const systemPromptContent =
@@ -38,7 +42,7 @@ export async function POST(req: NextRequest) {
       content: systemPromptContent,
     };
 
-    const bodyMessages: ReviewMessage[] = payload.messages ?? [];
+    const bodyMessages = payload.messages ?? [];
     const mappedMessages: ChatCompletionMessageParam[] = bodyMessages.map(
       (message) => {
         const role: ChatCompletionRole =
@@ -49,7 +53,7 @@ export async function POST(req: NextRequest) {
           content: message.content,
           ...(message.name ? { name: message.name } : {}),
         };
-      },
+      }
     );
 
     const messages: ChatCompletionMessageParam[] = [
@@ -73,14 +77,14 @@ export async function POST(req: NextRequest) {
     } catch {
       return NextResponse.json(
         { error: "Invalid JSON returned by model" },
-        { status: 400 },
+        { status: 400 }
       );
     }
 
     if (!parsed || typeof parsed !== "object") {
       return NextResponse.json(
         { error: "Model response was not a valid JSON object" },
-        { status: 400 },
+        { status: 400 }
       );
     }
 
@@ -88,7 +92,7 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     return NextResponse.json(
       { message: "Internal Server Error" },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }

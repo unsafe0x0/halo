@@ -46,7 +46,7 @@ const HeroSection = () => {
           <div className="flex items-center justify-center">
             <div className="relative w-full max-w-3xl h-96">
               <Image
-                src="/hero.png"
+                src="/hero.webp"
                 alt="Interview Preparation"
                 fill
                 className="object-contain"

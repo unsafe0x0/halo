@@ -4,6 +4,9 @@ import Button from "../common/Button";
 import NewInterview, { InterviewDetails } from "./NewInterview";
 import CallingAi from "./CallingAi";
 import InterviewCard from "./InterviewCard";
+import { LuTarget } from "react-icons/lu";
+import { AiOutlineLineChart } from "react-icons/ai";
+import { TiStar } from "react-icons/ti";
 
 interface InterviewData {
   id: string;
@@ -105,6 +108,58 @@ const InterviewsTab: React.FC<InterviewsTabProps> = ({ interviews }) => {
               New Interview
             </Button>
           </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            <div className="bg-card border border-border rounded-lg p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-foreground-1 text-sm mb-1">
+                    Total Interviews
+                  </p>
+                  <p className="text-3xl font-bold text-foreground">
+                    {interviews.length}
+                  </p>
+                </div>
+                <LuTarget className="w-10 h-10 text-accent" />
+              </div>
+            </div>
+
+            <div className="bg-card border border-border rounded-lg p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-foreground-1 text-sm mb-1">
+                    Average Score
+                  </p>
+                  <p className="text-3xl font-bold text-foreground">
+                    {interviews.length > 0
+                      ? (
+                          interviews.reduce(
+                            (sum, interview) => sum + interview.score,
+                            0
+                          ) / interviews.length
+                        ).toFixed(1)
+                      : "0"}
+                  </p>
+                </div>
+                <AiOutlineLineChart className="w-10 h-10 text-accent" />
+              </div>
+            </div>
+
+            <div className="bg-card border border-border rounded-lg p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-foreground-1 text-sm mb-1">Best Score</p>
+                  <p className="text-3xl font-bold text-foreground">
+                    {interviews.length > 0
+                      ? Math.max(...interviews.map((i) => i.score))
+                      : "0"}
+                  </p>
+                </div>
+                <TiStar className="w-10 h-10 text-accent" />
+              </div>
+            </div>
+          </div>
+
           <div className="w-full">
             {interviews && interviews.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

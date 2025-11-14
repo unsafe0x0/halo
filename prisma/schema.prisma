@@ -15,6 +15,7 @@ model User {
   password       String?
   profileImage   String?
   githubUsername String?     @map("github_username")
+  apiKey         String?
   interviews     Interview[]
   createdAt      DateTime    @default(now())
   updatedAt      DateTime    @updatedAt

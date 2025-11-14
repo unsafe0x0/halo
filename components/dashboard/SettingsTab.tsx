@@ -12,6 +12,7 @@ interface UserDetails {
   profileImage?: string;
   password?: string;
   githubUsername?: string;
+  apiKey?: string;
 }
 
 interface SettingsTabProps {
@@ -27,6 +28,7 @@ const SettingsTab = ({ userDetails }: SettingsTabProps) => {
     name: userDetails.name,
     password: userDetails.password || "",
     githubUsername: userDetails.githubUsername || "",
+    apiKey: userDetails.apiKey || "",
   });
 
   const { mutateAsync, isPending } = useMutation({
@@ -107,16 +109,6 @@ const SettingsTab = ({ userDetails }: SettingsTabProps) => {
         />
 
         <Input
-          label="Password"
-          type="password"
-          value={formData.password}
-          onChange={(e) =>
-            setFormData({ ...formData, password: e.target.value })
-          }
-          placeholder="Enter new password (leave blank to keep current)"
-        />
-
-        <Input
           label="GitHub Username"
           type="text"
           value={formData.githubUsername}
@@ -124,6 +116,23 @@ const SettingsTab = ({ userDetails }: SettingsTabProps) => {
             setFormData({ ...formData, githubUsername: e.target.value })
           }
           placeholder="Enter your GitHub username"
+        />
+
+        <Input
+          label="API Key(Groq)"
+          type="text"
+          value={formData.apiKey}
+          onChange={(e) => setFormData({ ...formData, apiKey: e.target.value })}
+          placeholder="Enter your API key"
+        />
+        <Input
+          label="Password"
+          type="password"
+          value={formData.password}
+          onChange={(e) =>
+            setFormData({ ...formData, password: e.target.value })
+          }
+          placeholder="Enter new password (leave blank to keep current)"
         />
 
         <div className="pt-4">

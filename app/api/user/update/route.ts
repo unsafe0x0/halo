@@ -11,11 +11,12 @@ export async function PUT(req: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { name, password, githubUsername } = await req.json();
+    const { name, password, githubUsername, apiKey } = await req.json();
 
     const updatedData: { [key: string]: any } = {};
     if (name) updatedData.name = name;
     if (githubUsername) updatedData.githubUsername = githubUsername;
+    if (apiKey) updatedData.apiKey = apiKey;
     if (password) {
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(password, salt);

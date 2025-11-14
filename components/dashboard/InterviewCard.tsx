@@ -61,7 +61,7 @@ const InterviewCard: React.FC<InterviewCardProps> = ({
           </div>
           <span
             className={`shrink-0 text-xs font-semibold px-2.5 py-1 rounded-full whitespace-nowrap ${getStatusColor(
-              status,
+              status
             )}`}
           >
             {status.replace("_", " ").charAt(0).toUpperCase() +
@@ -87,20 +87,15 @@ const InterviewCard: React.FC<InterviewCardProps> = ({
           </h4>
           <ul className="space-y-1">
             {strengths && strengths.length > 0 ? (
-              strengths.slice(0, 2).map((strength, idx) => (
+              strengths.map((strength, idx) => (
                 <li key={idx} className="text-xs text-foreground-1 flex gap-2">
                   <span className="text-green-600 font-bold">✓</span>
                   <span>{strength}</span>
                 </li>
               ))
             ) : (
-              <li className="text-xs text-foreground-1 italic">
+              <li className="text-xs text-foreground-1">
                 No strengths recorded
-              </li>
-            )}
-            {strengths && strengths.length > 2 && (
-              <li className="text-xs text-foreground-1/60 italic pt-1">
-                +{strengths.length - 2} more
               </li>
             )}
           </ul>
@@ -112,20 +107,15 @@ const InterviewCard: React.FC<InterviewCardProps> = ({
           </h4>
           <ul className="space-y-1">
             {improvements && improvements.length > 0 ? (
-              improvements.slice(0, 2).map((improvement, idx) => (
+              improvements.map((improvement, idx) => (
                 <li key={idx} className="text-xs text-foreground-1 flex gap-2">
                   <span className="text-accent font-bold">→</span>
                   <span>{improvement}</span>
                 </li>
               ))
             ) : (
-              <li className="text-xs text-foreground-1 italic">
+              <li className="text-xs text-foreground-1">
                 No improvements recorded
-              </li>
-            )}
-            {improvements && improvements.length > 2 && (
-              <li className="text-xs text-foreground-1/60 italic pt-1">
-                +{improvements.length - 2} more
               </li>
             )}
           </ul>
