@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
     if (!outcome) {
       return NextResponse.json(
         { error: "Missing outcome data" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
     console.error("Error storing interview:", error);
     return NextResponse.json(
       { error: "Internal Server Error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

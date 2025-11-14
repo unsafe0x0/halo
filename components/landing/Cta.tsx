@@ -23,13 +23,11 @@ const Cta = () => {
               </p>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto justify-center">
-              <Link href="/sign-up">
-                <Button size="large" variant="primary">
-                  Start Free Trial
-                </Button>
-              </Link>
-            </div>
+            <Link href="/sign-in">
+              <Button size="large" variant="primary">
+                Start Free Trial
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

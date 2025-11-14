@@ -36,7 +36,7 @@ const HaloAi = () => {
           parsed.map((msg: Message) => ({
             ...msg,
             timestamp: new Date(msg.timestamp),
-          }))
+          })),
         );
       } catch (error) {
         console.error("Failed to load messages from localStorage", error);

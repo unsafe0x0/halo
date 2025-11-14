@@ -36,14 +36,11 @@ const HeroSection = () => {
                 your dream job.
               </p>
             </div>
-
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link href="/sign-up">
-                <Button size="large" variant="primary">
-                  Get Started
-                </Button>
-              </Link>
-            </div>
+            <Link href="/sign-in">
+              <Button size="large" variant="primary">
+                Get Started
+              </Button>
+            </Link>
           </div>
 
           <div className="flex items-center justify-center">

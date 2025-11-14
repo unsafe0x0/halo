@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { IoClose, IoMenu, IoLogOut } from "react-icons/io5";
+import { BiMenu } from "react-icons/bi";
 import { BsMoon, BsSun } from "react-icons/bs";
 import { useTheme } from "next-themes";
 import { useSession, signOut } from "next-auth/react";
@@ -144,7 +144,7 @@ const Navbar = () => {
               className="md:hidden p-2 rounded-lg hover:bg-card transition-colors"
               aria-label="Toggle mobile menu"
             >
-              <IoMenu size={24} />
+              <BiMenu size={24} />
             </button>
           </div>
         </div>

@@ -32,12 +32,12 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json(
       { user: userData, scores, dates },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     return NextResponse.json(
       { error: "Internal Server Error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

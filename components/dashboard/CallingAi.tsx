@@ -142,7 +142,7 @@ const CallingAi: React.FC<CallingAiProps> = ({
       const utterance = new SpeechSynthesisUtterance(text);
       const voices = window.speechSynthesis.getVoices();
       const selectedVoice = voices.find(
-        (v) => v.name === interviewDetails?.voice
+        (v) => v.name === interviewDetails?.voice,
       );
 
       if (selectedVoice) {
@@ -200,7 +200,7 @@ const CallingAi: React.FC<CallingAiProps> = ({
     if (!interviewDetails || hasSentIntro) return;
 
     const introContent = buildInterviewPrompt(
-      "Please ask the first interview question, referencing the candidate details above."
+      "Please ask the first interview question, referencing the candidate details above.",
     );
 
     const introMessage: Message = {
