@@ -1,6 +1,7 @@
 import { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
+import bcrypt from "bcryptjs";
 import dbClient from "@/prisma/DbClient";
 import { sendResendEmail } from "@/utils/Resend";
 
@@ -24,7 +25,13 @@ export const authOptions: NextAuthOptions = {
         });
 
         if (!user || !user.password) return null;
-        if (user.password !== credentials.password) return null;
+
+        const isPasswordValid = await bcrypt.compare(
+          credentials.password,
+          user.password
+        );
+
+        if (!isPasswordValid) return null;
 
         return {
           id: user.id.toString(),
@@ -80,6 +87,7 @@ export const authOptions: NextAuthOptions = {
         token.id = dbUser.id;
         token.name = dbUser.name;
         token.email = dbUser.email;
+        token.image = dbUser.profileImage;
         token.profileImage = dbUser.profileImage;
         token.googleId = dbUser.googleId;
         token.apiKey = dbUser.apiKey ?? "";
@@ -92,6 +100,7 @@ export const authOptions: NextAuthOptions = {
       session.user.id = token.id;
       session.user.name = token.name;
       session.user.email = token.email;
+      session.user.image = token.profileImage;
       session.user.profileImage = token.profileImage;
       session.user.googleId = token.googleId;
       session.user.apiKey = token.apiKey ?? "";

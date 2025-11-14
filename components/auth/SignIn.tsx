@@ -13,8 +13,7 @@ const SignIn = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleCredentialsSignIn = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleCredentialsSignIn = async () => {
     setError(null);
 
     if (!email || !password) {
@@ -23,30 +22,41 @@ const SignIn = () => {
     }
 
     setLoading(true);
-    const res = await signIn("credentials", {
-      redirect: false,
-      email,
-      password,
-    });
+    try {
+      const res = await signIn("credentials", {
+        redirect: false,
+        email,
+        password,
+      });
 
-    setLoading(false);
+      setLoading(false);
 
-    if (res && (res as any).ok) {
-      const redirectUrl = (res as any).url || "/";
-      window.location.href = redirectUrl;
-      return;
-    }
-    if (res && (res as any).error) {
-      setError((res as any).error || "Sign in failed");
-    } else {
-      setError("Sign in failed");
+      if (res?.ok) {
+        const redirectUrl = res?.url || "/dashboard";
+        window.location.href = redirectUrl;
+        return;
+      }
+
+      if (res?.error) {
+        if (res.error === "CredentialsSignin") {
+          setError("Invalid email or password");
+        } else {
+          setError(res.error);
+        }
+      } else {
+        setError("Sign in failed. Please try again.");
+      }
+    } catch (err) {
+      setLoading(false);
+      setError("An error occurred. Please try again.");
+      console.error("Sign in error:", err);
     }
   };
 
   const handleGoogleSignIn = async () => {
     setError(null);
     setLoading(true);
-    await signIn("google", { callbackUrl: "/" });
+    await signIn("google", { callbackUrl: "/dashboard" });
     setLoading(false);
   };
 
@@ -76,10 +86,7 @@ const SignIn = () => {
           <div className="flex-1 h-px bg-border" />
         </div>
 
-        <form
-          onSubmit={handleCredentialsSignIn}
-          className="flex flex-col gap-4"
-        >
+        <form className="flex flex-col gap-4">
           <Input
             label="Email"
             type="email"
@@ -108,7 +115,13 @@ const SignIn = () => {
               </Link>
             </div>
 
-            <Button size="large" variant="primary" className="w-full">
+            <Button
+              size="large"
+              variant="primary"
+              className="w-full"
+              disabled={loading}
+              onClick={handleCredentialsSignIn}
+            >
               {loading ? "Signing in..." : "Sign in"}
             </Button>
           </div>
