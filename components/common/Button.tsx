@@ -35,7 +35,7 @@ const Button = ({
   return (
     <button
       type={type}
-      className={`font-medium  cursor-pointer disabled:opacity-50 flex items-center justify-center gap-2 ${
+      className={`font-medium cursor-pointer disabled:opacity-50 flex items-center justify-center gap-2 ${
         sizeClasses[size || "medium"]
       } ${variantClasses[variant || "primary"]} ${className}`}
       onClick={onClick}

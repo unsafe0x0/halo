@@ -30,7 +30,7 @@ const NewInterview: React.FC<NewInterviewDialogProps> = ({
   onClose,
   onStart,
 }) => {
-  const [selectedModel, setSelectedModel] = useState("openai/gpt-oss-20b");
+  const [selectedModel, setSelectedModel] = useState("openai/gpt-oss-120b");
   const [selectedVoice, setSelectedVoice] = useState("");
   const [role, setRole] = useState("");
   const [name, setName] = useState("");

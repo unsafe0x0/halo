@@ -60,21 +60,25 @@ const DashboardTab = ({
                 ))}
               </div>
             ) : (
-              <p className="text-foreground-1 text-center py-8">
-                No interviews yet.
-              </p>
+              <div className="bg-card border border-border rounded-lg p-8 text-center">
+                <p className="text-foreground-1">No interviews yet.</p>
+              </div>
             )}
           </div>
-          <div className="bg-card border border-border rounded-lg p-6 md:p-8">
+          <div>
             <h2 className="text-xl font-bold text-foreground mb-4">
               Recent Score Trends
             </h2>
             {recentScores.length > 0 && recentDates.length > 0 ? (
-              <Chart dates={recentDates} scoreData={recentScores} />
+              <div className="bg-card border border-border">
+                <Chart dates={recentDates} scoreData={recentScores} />
+              </div>
             ) : (
-              <p className="text-foreground-1 text-center py-8">
-                No score data available yet.
-              </p>
+              <div className="bg-card border border-border rounded-lg p-8 text-center">
+                <p className="text-foreground-1">
+                  No score data available yet.
+                </p>
+              </div>
             )}
           </div>
         </div>

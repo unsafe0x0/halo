@@ -288,7 +288,7 @@ const CallingAi: React.FC<CallingAiProps> = ({
                 } px-4 py-3 rounded-lg`}
                 style={{ maxWidth: "90%" }}
               >
-                <p className="text-sm md:text-base wrap-break-word">
+                <p className="text-sm md:text-base whitespace-pre-wrap wrap-break-word">
                   {message.content}
                 </p>
               </div>

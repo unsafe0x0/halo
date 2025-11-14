@@ -31,8 +31,7 @@ const Features = () => {
     {
       icon: PiSpeakerHighBold,
       title: "Voice Mode",
-      description:
-        "Practice with voice to prepare for actual interviews.",
+      description: "Practice with voice to prepare for actual interviews.",
     },
     {
       icon: IoBookmark,

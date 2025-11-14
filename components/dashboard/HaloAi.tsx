@@ -14,7 +14,7 @@ interface Message {
 }
 
 const models = [
-  { label: "GPT-OSS", value: "openai/gpt-oss-20b" },
+  { label: "GPT-OSS", value: "openai/gpt-oss-120b" },
   { label: "Llama 3.1", value: "llama-3.1-8b-instant" },
   { label: "Qwen 3", value: "qwen/qwen3-32b" },
 ];
@@ -22,24 +22,25 @@ const models = [
 const HaloAi = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
-  const [selectedModel, setSelectedModel] = useState("openai/gpt-oss-20b");
+  const [selectedModel, setSelectedModel] = useState("openai/gpt-oss-120b");
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const [shouldFocus, setShouldFocus] = useState(false);
+
+  const [allowBlur, setAllowBlur] = useState(false);
 
   useEffect(() => {
-    const savedMessages = localStorage.getItem("halo-chat-messages");
-    if (savedMessages) {
+    const saved = localStorage.getItem("halo-chat-messages");
+    if (saved) {
       try {
-        const parsed = JSON.parse(savedMessages);
+        const parsed = JSON.parse(saved);
         setMessages(
           parsed.map((msg: Message) => ({
             ...msg,
             timestamp: new Date(msg.timestamp),
           })),
         );
-      } catch (error) {
-        console.error("Failed to load messages from localStorage", error);
+      } catch (err) {
+        console.error("Failed to load messages", err);
       }
     }
   }, []);
@@ -55,11 +56,23 @@ const HaloAi = () => {
   }, [messages]);
 
   useEffect(() => {
-    if (shouldFocus && textareaRef.current) {
+    const handler = (e: MouseEvent) => {
+      if (
+        textareaRef.current &&
+        !textareaRef.current.contains(e.target as Node)
+      ) {
+        setAllowBlur(true);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
+
+  useEffect(() => {
+    if (!allowBlur && textareaRef.current) {
       textareaRef.current.focus();
-      setShouldFocus(false);
     }
-  }, [shouldFocus]);
+  });
 
   const sendMessage = useMutation({
     mutationFn: async (prompt: string) => {
@@ -76,7 +89,7 @@ const HaloAi = () => {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to send message");
+        throw new Error("Failed to send");
       }
 
       return response.json();
@@ -89,6 +102,7 @@ const HaloAi = () => {
         timestamp: new Date(),
       };
       setMessages((prev) => [...prev, assistantMessage]);
+      setAllowBlur(false);
     },
     onError: () => {
       const errorMessage: Message = {
@@ -98,6 +112,7 @@ const HaloAi = () => {
         timestamp: new Date(),
       };
       setMessages((prev) => [...prev, errorMessage]);
+      setAllowBlur(false);
     },
   });
 
@@ -114,7 +129,8 @@ const HaloAi = () => {
     setMessages((prev) => [...prev, userMessage]);
     sendMessage.mutate(input);
     setInput("");
-    setShouldFocus(true);
+
+    setAllowBlur(false);
   };
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -128,11 +144,31 @@ const HaloAi = () => {
     localStorage.removeItem("halo-chat-messages");
     setMessages([]);
     setInput("");
+    setAllowBlur(false);
+  };
+
+  const exportChat = (messages: Message[]) => {
+    const text = messages
+      .map((m) => {
+        const time = m.timestamp.toISOString();
+        return `[${m.role}] ${time}\n${m.content}`;
+      })
+      .join("\n\n");
+
+    const blob = new Blob([text], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "chat.txt";
+    link.click();
+
+    URL.revokeObjectURL(url);
   };
 
   return (
     <div className="relative w-full h-screen flex flex-col bg-background">
-      <div className="absolute top-4 left-4 z-10">
+      <div className="absolute top-4 left-4 z-10 flex gap-2 items-center">
         <Button
           variant="primary"
           size="medium"
@@ -140,6 +176,14 @@ const HaloAi = () => {
           className="flex items-center gap-2 border border-border"
         >
           New Chat
+        </Button>
+        <Button
+          variant="ghost"
+          size="medium"
+          onClick={() => exportChat(messages)}
+          className="flex items-center gap-2 border border-border"
+        >
+          Export
         </Button>
       </div>
 
@@ -171,7 +215,7 @@ const HaloAi = () => {
                 } px-4 py-3 rounded-lg`}
                 style={{ maxWidth: "90%" }}
               >
-                <p className="text-sm md:text-base wrap-break-word">
+                <p className="text-sm md:text-base whitespace-pre-wrap wrap-break-word">
                   {message.content}
                 </p>
               </div>
@@ -196,10 +240,15 @@ const HaloAi = () => {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyPress={handleKeyPress}
+            onBlur={() => {
+              if (!allowBlur) {
+                textareaRef.current?.focus();
+              }
+            }}
+            onFocus={() => setAllowBlur(false)}
             placeholder="Type your message... (Shift + Enter for new line)"
             className="w-full px-4 py-3 pr-32 rounded-md bg-background text-foreground border border-border focus:outline-none focus:ring-2 focus:ring-accent resize-none"
             rows={3}
-            disabled={sendMessage.isPending}
           />
 
           <div className="absolute bottom-3 right-3 flex gap-2 items-center">

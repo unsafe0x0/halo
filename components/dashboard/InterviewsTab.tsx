@@ -132,12 +132,9 @@ const InterviewsTab: React.FC<InterviewsTabProps> = ({ interviews }) => {
                 <h3 className="text-lg font-semibold text-foreground mb-2">
                   No interviews yet
                 </h3>
-                <p className="text-foreground-1 mb-6">
+                <p className="text-foreground-1">
                   Start your first interview to see it here
                 </p>
-                <Button onClick={() => setIsDialogOpen(true)}>
-                  Start Interview
-                </Button>
               </div>
             )}
           </div>
