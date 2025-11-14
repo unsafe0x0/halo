@@ -9,9 +9,11 @@
   --card-1: #eeeeee;
   --foreground-1: #0a0a0a;
   --border: #e2e8f0;
-  --accent: #2e71e2;
-  --accent-hover: #2b67cf;
+  --accent: #7f22fe;
+  --accent-hover: #6b21a8;
   --accent-foreground: #ffffff;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
 }
 
 .dark {
@@ -21,9 +23,11 @@
   --card-1: #2a2a2a;
   --foreground-1: #f5f5f5;
   --border: #282828;
-  --accent: #2e71e2;
-  --accent-hover: #2b67cf;
+  --accent: #7f22fe;
+  --accent-hover: #6b21a8;
   --accent-foreground: #ffffff;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
 }
 
 @theme inline {
@@ -57,4 +61,9 @@ body {
 
 ::-webkit-scrollbar {
   display: none;
+}
+
+/* Remove click/focus outline from Recharts charts */
+.recharts-wrapper .recharts-surface:focus {
+  outline: none !important;
 }

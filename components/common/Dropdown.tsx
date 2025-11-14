@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
-import { ChevronDownIcon } from "@radix-ui/react-icons";
+import { FaAngleDown } from "react-icons/fa6";
 
 interface DropdownItem {
   label: string;
@@ -54,7 +54,7 @@ const Dropdown = ({
     <div ref={dropdownRef} className={`relative w-full ${className}`}>
       <button
         type="button"
-        className={`flex items-center justify-between w-full px-4 py-2 border border-border rounded-md bg-card text-foreground font-medium focus:outline-none focus:ring-2 focus:ring-accent transition-all ${
+        className={`flex items-center justify-between w-full px-4 py-2 border border-border rounded-md bg-card text-foreground text-sm font-normal focus:outline-none focus:ring-2 focus:ring-accent transition-all ${
           disabled ? "opacity-50 cursor-not-allowed" : ""
         }`}
         onClick={() => !disabled && setOpen((o) => !o)}
@@ -64,14 +64,14 @@ const Dropdown = ({
           {selected?.icon}
           {selected ? selected.label : placeholder}
         </span>
-        <ChevronDownIcon
+        <FaAngleDown
           width={16}
           height={16}
           className={`ml-2 transition-transform ${open ? "rotate-180" : ""}`}
         />
       </button>
       {open && (
-        <div className="absolute left-0 mt-2 w-full bg-card border border-border rounded-md shadow-lg z-10">
+        <div className="absolute left-0 mt-2 w-full bg-card border border-border rounded-md shadow-lg z-10 max-h-64 overflow-y-auto">
           {items.length === 0 ? (
             <div className="px-4 py-2 text-foreground text-sm">No items</div>
           ) : (
@@ -79,7 +79,7 @@ const Dropdown = ({
               <button
                 key={item.value}
                 type="button"
-                className={`flex items-center w-full px-4 py-2 text-left text-foreground hover:bg-card-1 transition-colors font-normal ${
+                className={`flex items-center w-full px-4 py-2 text-left text-foreground text-sm font-normal hover:bg-card-1 transition-colors ${
                   selected?.value === item.value
                     ? "bg-accent text-accent-foreground"
                     : ""

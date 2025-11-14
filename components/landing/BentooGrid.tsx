@@ -188,11 +188,15 @@ const BentooGrid = () => {
                     <p className="text-sm font-medium mb-2">Score Breakdown:</p>
                     <div className="space-y-2">
                       <div className="flex justify-between text-xs">
-                        <span className="text-foreground-1">Clarity</span>
+                        <span className="text-foreground-1 text-base">
+                          Clarity
+                        </span>
                         <span className="text-accent">8.5/10</span>
                       </div>
                       <div className="flex justify-between text-xs">
-                        <span className="text-foreground-1">Depth</span>
+                        <span className="text-foreground-1 text-base">
+                          Depth
+                        </span>
                         <span className="text-accent">7.8/10</span>
                       </div>
                     </div>

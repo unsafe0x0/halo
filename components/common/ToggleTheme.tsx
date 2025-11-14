@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
-import { SunIcon, MoonIcon } from "@radix-ui/react-icons";
+import { BsSun, BsMoon } from "react-icons/bs";
 
 const ToggleTheme = () => {
   const { theme, setTheme } = useTheme();
@@ -18,11 +18,7 @@ const ToggleTheme = () => {
 
   return (
     <button onClick={toggleTheme}>
-      {isDark ? (
-        <SunIcon width="18" height="18" />
-      ) : (
-        <MoonIcon width="18" height="18" />
-      )}
+      {isDark ? <BsSun size={18} /> : <BsMoon size={18} />}
     </button>
   );
 };

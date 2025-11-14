@@ -1,16 +1,40 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { MoonIcon, SunIcon, HamburgerMenuIcon } from "@radix-ui/react-icons";
+import { IoClose, IoMenu, IoLogOut } from "react-icons/io5";
+import { BsMoon, BsSun } from "react-icons/bs";
 import { useTheme } from "next-themes";
+import { useSession, signOut } from "next-auth/react";
+import Image from "next/image";
 
 const Navbar = () => {
   const { theme, setTheme } = useTheme();
+  const { data: session } = useSession();
   const [mounted, setMounted] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [profileMenuOpen, setProfileMenuOpen] = useState(false);
+  const profileMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => setMounted(true), []);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        profileMenuRef.current &&
+        !profileMenuRef.current.contains(event.target as Node)
+      ) {
+        setProfileMenuOpen(false);
+      }
+    }
+    if (profileMenuOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [profileMenuOpen]);
+
   if (!mounted) return null;
 
   const isDark = theme === "dark";
@@ -49,25 +73,78 @@ const Navbar = () => {
               className="p-2 rounded-lg hover:bg-card transition-colors"
               aria-label="Toggle theme"
             >
-              {isDark ? (
-                <SunIcon width={18} height={18} />
-              ) : (
-                <MoonIcon width={18} height={18} />
-              )}
+              {isDark ? <BsSun size={18} /> : <BsMoon size={18} />}
             </button>
 
-            <Link href="/sign-in" className="hidden md:inline-flex">
-              <button className="px-4 py-2 bg-accent text-accent-foreground rounded-md cursor-pointer hover:opacity-90 transition-opacity">
-                Sign in
-              </button>
-            </Link>
+            {session?.user ? (
+              <div ref={profileMenuRef} className="relative">
+                <button
+                  onClick={() => setProfileMenuOpen(!profileMenuOpen)}
+                  className="flex items-center gap-2 p-1 rounded-lg hover:bg-card transition-colors"
+                  aria-label="Profile menu"
+                >
+                  {session.user.image && (
+                    <Image
+                      src={session.user.image}
+                      alt={session.user.name || "User"}
+                      width={32}
+                      height={32}
+                      className="rounded-full"
+                    />
+                  )}
+                  {!session.user.image && (
+                    <div className="w-8 h-8 rounded-full bg-accent flex items-center justify-center text-accent-foreground font-bold text-sm">
+                      {session.user.name?.charAt(0).toUpperCase() || "U"}
+                    </div>
+                  )}
+                </button>
+
+                {profileMenuOpen && (
+                  <div className="absolute right-0 mt-2 w-56 bg-card border border-border rounded-lg z-50">
+                    <div className="px-4 py-3 border-b border-border">
+                      <p className="text-sm font-semibold text-foreground">
+                        {session.user.name}
+                      </p>
+                      <p className="text-xs text-foreground-1">
+                        {session.user.email}
+                      </p>
+                    </div>
+                    <div className="py-2">
+                      <Link href="/dashboard" className="w-full">
+                        <button
+                          onClick={() => setProfileMenuOpen(false)}
+                          className="flex items-center w-full px-4 py-2 text-sm text-foreground hover:bg-card-1 transition-colors"
+                        >
+                          Dashboard
+                        </button>
+                      </Link>
+                      <button
+                        onClick={() => {
+                          setProfileMenuOpen(false);
+                          signOut();
+                        }}
+                        className="flex items-center w-full px-4 py-2 text-sm text-foreground hover:bg-card-1 transition-colors"
+                      >
+                        Logout
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <Link href="/sign-in" className="hidden md:inline-flex">
+                <button className="px-4 py-2 bg-accent text-accent-foreground rounded-md cursor-pointer hover:opacity-90 transition-opacity">
+                  Sign in
+                </button>
+              </Link>
+            )}
 
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="md:hidden p-2 rounded-lg hover:bg-card transition-colors"
               aria-label="Toggle mobile menu"
             >
-              <HamburgerMenuIcon width={24} height={24} />
+              <IoMenu size={24} />
             </button>
           </div>
         </div>
@@ -87,11 +164,38 @@ const Navbar = () => {
               </Link>
             ))}
 
-            <Link href="/sign-in" className="w-full mt-4 block">
-              <button className="w-full px-4 py-2 bg-accent text-accent-foreground rounded-md cursor-pointer hover:opacity-90 transition-opacity">
-                Sign in
-              </button>
-            </Link>
+            {session?.user ? (
+              <>
+                <div className="mt-4 pt-4 border-t border-border">
+                  <p className="text-sm font-semibold text-foreground px-1.5 py-2">
+                    {session.user.name}
+                  </p>
+                  <Link href="/dashboard" className="w-full block">
+                    <button
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="w-full px-4 py-2 text-sm text-foreground hover:bg-card rounded-md transition-colors text-left"
+                    >
+                      Dashboard
+                    </button>
+                  </Link>
+                  <button
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      signOut();
+                    }}
+                    className="flex items-center w-full px-4 py-2 text-sm text-foreground hover:bg-card rounded-md transition-colors mt-2"
+                  >
+                    Logout
+                  </button>
+                </div>
+              </>
+            ) : (
+              <Link href="/sign-in" className="w-full mt-4 block">
+                <button className="w-full px-4 py-2 bg-accent text-accent-foreground rounded-md cursor-pointer hover:opacity-90 transition-opacity">
+                  Sign in
+                </button>
+              </Link>
+            )}
           </div>
         </div>
       )}

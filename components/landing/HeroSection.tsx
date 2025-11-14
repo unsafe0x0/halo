@@ -2,8 +2,9 @@
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import Button from "@/components/common/Button";
-import { LightningBoltIcon } from "@radix-ui/react-icons";
+import { HiLightningBolt } from "react-icons/hi";
 
 const HeroSection = () => {
   return (
@@ -16,7 +17,7 @@ const HeroSection = () => {
           <div className="flex flex-col gap-8">
             <div className="flex flex-col gap-4">
               <div className="inline-flex items-center gap-2 w-fit px-3 py-1.5 rounded-full border border-accent bg-accent/20">
-                <LightningBoltIcon
+                <HiLightningBolt
                   width={16}
                   height={16}
                   className="text-accent"
@@ -46,6 +47,17 @@ const HeroSection = () => {
           </div>
 
           <div className="flex items-center justify-center">
+            <div className="relative w-full max-w-3xl h-96">
+              <Image
+                src="/hero.png"
+                alt="Interview Preparation"
+                fill
+                className="object-contain"
+                priority
+              />
+            </div>
+
+            {/* Mock UI - Commented out
             <div className="relative w-full max-w-2xl h-96">
               <div className="relative bg-card border border-border rounded-3xl p-6 flex flex-col gap-4">
                 <div className="flex items-center justify-between pb-4 border-b border-border">
@@ -96,6 +108,7 @@ const HeroSection = () => {
                 </div>
               </div>
             </div>
+            */}
           </div>
         </div>
       </div>

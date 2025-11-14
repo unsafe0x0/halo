@@ -2,6 +2,7 @@ import { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import dbClient from "@/prisma/DbClient";
+import { sendResendEmail } from "@/utils/Resend";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -16,21 +17,14 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
-          return null;
-        }
+        if (!credentials?.email || !credentials?.password) return null;
 
         const user = await dbClient.user.findUnique({
           where: { email: credentials.email },
         });
 
-        if (!user || !user.password) {
-          return null;
-        }
-
-        if (user.password !== credentials.password) {
-          return null;
-        }
+        if (!user || !user.password) return null;
+        if (user.password !== credentials.password) return null;
 
         return {
           id: user.id.toString(),
@@ -41,33 +35,39 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
+
   callbacks: {
     async signIn({ user, account, profile }) {
-      if (account?.provider === "google") {
-        const googleId = profile?.sub || user.id;
+      let dbUser = await dbClient.user.findUnique({
+        where: { email: user.email! },
+      });
 
-        const dbUser = await dbClient.user.findUnique({
-          where: { email: user.email! },
+      if (!dbUser) {
+        dbUser = await dbClient.user.create({
+          data: {
+            email: user.email!,
+            name: user.name || "",
+            profileImage: user.image || "",
+            googleId: account?.provider === "google" ? profile?.sub : null,
+          },
         });
 
-        if (!dbUser) {
-          await dbClient.user.create({
-            data: {
-              email: user.email!,
-              name: user.name || "",
-              profileImage: user.image || "",
-              googleId,
-            },
-          });
-        } else {
-          if (!dbUser.googleId) {
-            await dbClient.user.update({
-              where: { email: user.email! },
-              data: { googleId },
-            });
-          }
-        }
+        // await sendResendEmail({
+        //   to: user.email!,
+        //   subject: "Welcome to Halo!",
+        //   body: `<h1>Welcome to Halo, ${
+        //     user.name || "User"
+        //   }!</h1><p>We're excited to have you on board.</p>`,
+        // });
       }
+
+      if (account?.provider === "google" && !dbUser.googleId) {
+        await dbClient.user.update({
+          where: { email: user.email! },
+          data: { googleId: profile?.sub },
+        });
+      }
+
       return true;
     },
 
@@ -98,12 +98,15 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
   },
+
   pages: {
     signIn: "/signin",
     signOut: "/",
   },
+
   session: {
     strategy: "jwt",
   },
+
   secret: process.env.NEXT_AUTH_SECRET,
 };

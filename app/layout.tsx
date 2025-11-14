@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Hanken_Grotesk } from "next/font/google";
 import "./globals.css";
 import ThemeProvider from "@/providers/ThemeProvider";
 import AuthProvider from "@/providers/AuthProvider";
 import TanStackQueryProvider from "@/hooks/TanstackQuery";
+import { ToastProvider } from "@/providers/ToastProvider";
 
-const primary = Inter({
+const primary = Hanken_Grotesk({
+  weight: ["400", "500", "600"],
   variable: "--font-primary",
   subsets: ["latin"],
 });
@@ -26,7 +28,9 @@ export default function RootLayout({
       <body className={primary.variable}>
         <ThemeProvider>
           <AuthProvider>
-            <TanStackQueryProvider>{children}</TanStackQueryProvider>
+            <TanStackQueryProvider>
+              <ToastProvider>{children}</ToastProvider>
+            </TanStackQueryProvider>
           </AuthProvider>
         </ThemeProvider>
       </body>

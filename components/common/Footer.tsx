@@ -2,12 +2,8 @@
 
 import React from "react";
 import Link from "next/link";
-import {
-  LinkedInLogoIcon,
-  TwitterLogoIcon,
-  GitHubLogoIcon,
-  EnvelopeOpenIcon,
-} from "@radix-ui/react-icons";
+import { FaLinkedin, FaTwitter, FaGithub } from "react-icons/fa";
+import { HiOutlineMail } from "react-icons/hi";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -52,11 +48,11 @@ const Footer = () => {
   ];
 
   const socialLinks = [
-    { Icon: TwitterLogoIcon, label: "Twitter", href: "https://twitter.com" },
-    { Icon: LinkedInLogoIcon, label: "LinkedIn", href: "https://linkedin.com" },
-    { Icon: GitHubLogoIcon, label: "GitHub", href: "https://github.com" },
+    { Icon: FaLinkedin, label: "LinkedIn", href: "https://linkedin.com" },
+    { Icon: FaTwitter, label: "Twitter", href: "https://twitter.com" },
+    { Icon: FaGithub, label: "GitHub", href: "https://github.com" },
     {
-      Icon: EnvelopeOpenIcon,
+      Icon: HiOutlineMail,
       label: "Email",
       href: "mailto:support@halohq.com",
     },

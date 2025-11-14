@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { CheckCircledIcon, RocketIcon, GearIcon } from "@radix-ui/react-icons";
 
 const HowItWorks = () => {
   const steps = [

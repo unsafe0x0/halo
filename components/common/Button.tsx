@@ -7,6 +7,7 @@ interface ButtonProps {
   className?: string;
   size?: "small" | "medium" | "large";
   variant?: "primary" | "ghost" | "destructive";
+  type?: "button" | "submit" | "reset";
 }
 
 const Button = ({
@@ -16,6 +17,7 @@ const Button = ({
   className,
   size,
   variant,
+  type = "button",
 }: ButtonProps) => {
   const sizeClasses = {
     small: "px-3 py-1.5 text-sm rounded",
@@ -27,12 +29,13 @@ const Button = ({
     primary: "bg-accent text-accent-foreground hover:accent-hover",
     ghost: "bg-transparent text-foreground hover:bg-card",
     destructive:
-      "bg-destructive text-destructive-foreground hover:bg-destructive-hover",
+      "bg-destructive text-destructive-foreground hover:bg-destructive/90",
   };
 
   return (
     <button
-      className={`font-medium  cursor-pointer disabled:opacity-50 ${
+      type={type}
+      className={`font-medium  cursor-pointer disabled:opacity-50 flex items-center justify-center gap-2 ${
         sizeClasses[size || "medium"]
       } ${variantClasses[variant || "primary"]} ${className}`}
       onClick={onClick}
