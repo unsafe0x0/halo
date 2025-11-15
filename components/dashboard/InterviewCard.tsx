@@ -61,7 +61,7 @@ const InterviewCard: React.FC<InterviewCardProps> = ({
           </div>
           <span
             className={`shrink-0 text-xs font-semibold px-2.5 py-1 rounded-full whitespace-nowrap ${getStatusColor(
-              status
+              status,
             )}`}
           >
             {status.replace("_", " ").charAt(0).toUpperCase() +

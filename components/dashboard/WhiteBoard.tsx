@@ -1,8 +1,7 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import dynamic from "next/dynamic";
 import "tldraw/tldraw.css";
-import { useTheme } from "next-themes";
 
 const Tldraw = dynamic(() => import("tldraw").then((mod) => mod.Tldraw), {
   ssr: false,
@@ -15,20 +14,12 @@ const Tldraw = dynamic(() => import("tldraw").then((mod) => mod.Tldraw), {
 
 const WhiteBoard = () => {
   const [mounted, setMounted] = useState(false);
-  const { resolvedTheme } = useTheme();
-  const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  useEffect(() => {
-    if (resolvedTheme) {
-      setIsDark(resolvedTheme === "dark");
-    }
-  }, [resolvedTheme]);
-
-  if (!mounted || !resolvedTheme)
+  if (!mounted)
     return (
       <div className="flex items-center justify-center h-full w-full">
         Initializing...
@@ -36,9 +27,7 @@ const WhiteBoard = () => {
     );
 
   return (
-    <div
-      className={`w-full h-full overflow-hidden ${isDark ? "dark" : "light"}`}
-    >
+    <div className="w-full h-full overflow-hidden">
       <Tldraw autoFocus persistenceKey="halo-whiteboard" />
     </div>
   );

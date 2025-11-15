@@ -53,7 +53,7 @@ export async function POST(req: NextRequest) {
           content: message.content,
           ...(message.name ? { name: message.name } : {}),
         };
-      }
+      },
     );
 
     const messages: ChatCompletionMessageParam[] = [
@@ -77,14 +77,14 @@ export async function POST(req: NextRequest) {
     } catch {
       return NextResponse.json(
         { error: "Invalid JSON returned by model" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     if (!parsed || typeof parsed !== "object") {
       return NextResponse.json(
         { error: "Model response was not a valid JSON object" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -92,7 +92,7 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     return NextResponse.json(
       { message: "Internal Server Error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

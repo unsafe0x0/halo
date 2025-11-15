@@ -135,7 +135,7 @@ const InterviewsTab: React.FC<InterviewsTabProps> = ({ interviews }) => {
                       ? (
                           interviews.reduce(
                             (sum, interview) => sum + interview.score,
-                            0
+                            0,
                           ) / interviews.length
                         ).toFixed(1)
                       : "0"}
