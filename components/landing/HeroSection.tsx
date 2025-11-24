@@ -2,110 +2,88 @@
 
 import React from "react";
 import Link from "next/link";
-import Image from "next/image";
 import Button from "@/components/common/Button";
 import { HiLightningBolt } from "react-icons/hi";
+import MockDashboard from "./MockDashboard";
 
 const HeroSection = () => {
   return (
     <section
       id="hero"
-      className="py-20 md:py-32 min-h-screen flex items-center"
+      className="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto px-4 md:px-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          <div className="flex flex-col gap-8">
-            <div className="flex flex-col gap-4">
-              <div className="inline-flex items-center gap-2 w-fit px-3 py-1.5 rounded-full border border-accent bg-accent/20">
-                <HiLightningBolt
-                  width={16}
-                  height={16}
-                  className="text-accent"
-                />
-                <span className="text-xs md:text-sm font-medium text-accent">
-                  AI-Powered Interview Prep
-                </span>
-              </div>{" "}
-              <h1 className="text-4xl md:text-6xl font-bold leading-tight">
-                Master Your Interview with{" "}
-                <span className="text-accent">Halo</span>
-              </h1>
-              <p className="text-lg md:text-xl text-foreground-1 leading-relaxed max-w-2xl">
-                Prepare for your next interview with AI-powered practice
-                sessions. Get real-time feedback, improve your answers, and land
-                your dream job.
-              </p>
-            </div>
-            <Link href="/sign-in">
-              <Button size="large" variant="primary">
-                Get Started
+      <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10">
+        <div className="flex flex-col items-center text-center gap-8 mb-16">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-accent/20 bg-accent/5 backdrop-blur-sm">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-accent"></span>
+            </span>
+            <span className="text-xs md:text-sm font-medium text-accent">
+              AI-Powered Interview Prep
+            </span>
+          </div>
+
+          <h1 className="text-5xl md:text-7xl font-bold tracking-tight leading-[1.1] max-w-4xl">
+            Master Your Interview with <span className="text-accent">Halo</span>
+          </h1>
+
+          <p className="text-lg md:text-xl text-foreground-1 leading-relaxed max-w-2xl mx-auto">
+            Prepare for your next interview with AI-powered practice sessions.
+            Get real-time feedback, improve your answers, and land your dream
+            job.
+          </p>
+
+          <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
+            <Link href="/sign-in" className="w-full sm:w-auto">
+              <Button size="large" variant="primary" className="">
+                Get Started Free
               </Button>
             </Link>
           </div>
+        </div>
 
-          <div className="flex items-center justify-center">
-            <div className="relative w-full max-w-3xl h-96">
-              <Image
-                src="/hero.webp"
-                alt="Interview Preparation"
-                fill
-                className="object-contain"
-                priority
-              />
-            </div>
+        <div className="relative mx-auto max-w-5xl">
+          <div className="absolute -inset-1 bg-gradient-to-r from-accent to-accent-hover rounded-2xl blur opacity-20" />
 
-            {/* Mock UI - Commented out
-            <div className="relative w-full max-w-2xl h-96">
-              <div className="relative bg-card border border-border rounded-3xl p-6 flex flex-col gap-4">
-                <div className="flex items-center justify-between pb-4 border-b border-border">
-                  <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 bg-accent rounded-full" />
-                    <span className="text-sm font-medium text-foreground-1">
-                      Live Interview Session
-                    </span>
-                  </div>
-                  <span className="text-sm text-accent font-medium">4:32</span>
-                </div>
-                <div className="flex-1 flex flex-col gap-4">
-                  <div className="text-sm text-foreground-1 font-medium">
-                    Question 2 of 5
-                  </div>
-                  <div className="p-4 bg-card-1 rounded-lg border border-border">
-                    <p className="text-sm leading-relaxed text-foreground">
-                      "Tell us about a challenging project you led..."
-                    </p>
-                  </div>
-                </div>
-                <div className="space-y-3 pt-2 border-t border-border">
-                  <div className="text-sm text-accent font-medium">
-                    Real-time Feedback
-                  </div>
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 bg-accent rounded-full" />
-                      <span className="text-sm text-foreground-1">
-                        Clarity: Good
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 bg-accent rounded-full" />
-                      <span className="text-sm text-foreground-1">
-                        Pace: Natural
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex gap-3 pt-2">
-                  <button className="flex-1 px-4 py-2.5 rounded-lg bg-card-1 border border-border text-foreground text-sm font-medium hover:ring-2 hover:ring-accent transition-colors">
-                    Pause
-                  </button>
-                  <button className="flex-1 px-4 py-2.5 rounded-lg bg-accent text-accent-foreground text-sm font-medium hover:opacity-90 transition-opacity">
-                    Submit
-                  </button>
-                </div>
+          <div className="relative rounded-xl border border-border/50 bg-background/50 backdrop-blur-xl overflow-hidden">
+            <div className="aspect-[16/10] md:aspect-[16/9] w-full relative">
+              <div className="absolute inset-0 p-2 md:p-4 bg-card/50">
+                <MockDashboard />
               </div>
             </div>
-            */}
+          </div>
+
+          <div className="absolute -left-4 md:-left-12 top-1/4 p-3 bg-card border border-border rounded-xl shadow-lg flex items-center gap-3 animate-bounce-slow hidden md:flex">
+            <div className="w-10 h-10 bg-green-500/10 rounded-full flex items-center justify-center text-green-500">
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+            </div>
+            <div>
+              <div className="text-xs text-foreground-1">Success Rate</div>
+              <div className="text-sm font-bold">98%</div>
+            </div>
+          </div>
+
+          <div className="absolute -right-4 md:-right-12 bottom-1/4 p-3 bg-card border border-border rounded-xl shadow-lg flex items-center gap-3 animate-bounce-slow delay-700 hidden md:flex">
+            <div className="w-10 h-10 bg-accent/10 rounded-full flex items-center justify-center text-accent">
+              <HiLightningBolt size={20} />
+            </div>
+            <div>
+              <div className="text-xs text-foreground-1">AI Feedback</div>
+              <div className="text-sm font-bold">Instant</div>
+            </div>
           </div>
         </div>
       </div>

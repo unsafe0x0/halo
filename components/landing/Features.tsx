@@ -70,8 +70,8 @@ const Features = () => {
               >
                 <div className="flex flex-col gap-4">
                   <feature.icon
-                    size={38}
-                    className="text-accent-foreground font-bold text-xl p-1.5 rounded-lg bg-accent flex items-center justify-center"
+                    size={48}
+                    className="text-accent font-bold text-xl p-3 rounded-xl bg-accent/10 flex items-center justify-center mb-2"
                   />
                   <div className="flex flex-col gap-2">
                     <h3 className="text-xl font-bold">{feature.title}</h3>

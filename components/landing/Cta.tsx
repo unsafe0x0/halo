@@ -8,26 +8,32 @@ const Cta = () => {
   return (
     <section className="py-20 md:py-32">
       <div className="max-w-7xl mx-auto px-4 md:px-6">
-        <div className="relative rounded-2xl overflow-hidden">
-          <div className="absolute inset-0 bg-linear-to-r from-accent/20 via-transparent to-accent/10 blur-3xl" />
+        <div className="relative rounded-3xl overflow-hidden bg-accent text-accent-foreground">
+          <div className="absolute inset-0 opacity-10">
+            <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:16px_16px]" />
+          </div>
 
-          <div className="relative p-8 md:p-16 bg-card border border-border rounded-2xl flex flex-col gap-8 items-center text-center">
-            <div className="flex flex-col gap-4">
-              <h2 className="text-3xl md:text-5xl font-bold leading-tight">
-                Ready to Ace Your Interview?
-              </h2>
+          <div className="relative p-12 md:p-24 flex flex-col items-center text-center gap-8 max-w-4xl mx-auto">
+            <h2 className="text-4xl md:text-6xl font-bold tracking-tight leading-tight">
+              Ready to Master Your Next Interview?
+            </h2>
 
-              <p className="text-lg text-foreground-1 max-w-2xl mx-auto">
-                Join thousands of professionals who've already improved their
-                interview skills with Halo. Start your free trial today.
-              </p>
+            <p className="text-lg md:text-xl text-accent-foreground/80 max-w-2xl leading-relaxed">
+              Join thousands of professionals who are landing their dream jobs
+              with Halo's AI-powered preparation platform.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto pt-4">
+              <Link href="/sign-in" className="w-full sm:w-auto">
+                <Button
+                  size="large"
+                  variant="ghost"
+                  className="w-full sm:w-auto bg-background text-foreground hover:bg-background/90"
+                >
+                  Get Started for Free
+                </Button>
+              </Link>
             </div>
-
-            <Link href="/sign-in">
-              <Button size="large" variant="primary">
-                Start Free Trial
-              </Button>
-            </Link>
           </div>
         </div>
       </div>

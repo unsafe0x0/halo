@@ -6,7 +6,7 @@ interface ButtonProps {
   disabled?: boolean;
   className?: string;
   size?: "small" | "medium" | "large";
-  variant?: "primary" | "ghost" | "destructive";
+  variant?: "primary" | "ghost" | "destructive" | "outline";
   type?: "button" | "submit" | "reset";
 }
 
@@ -27,7 +27,9 @@ const Button = ({
 
   const variantClasses = {
     primary: "bg-accent text-accent-foreground hover:accent-hover",
-    ghost: "bg-transparent text-foreground hover:bg-card",
+    ghost: "bg-neutral-100 text-neutral-800 hover:bg-neutral-200",
+    outline:
+      "bg-transparent border border-border text-foreground hover:bg-card",
     destructive:
       "bg-destructive text-destructive-foreground hover:bg-destructive/90",
   };

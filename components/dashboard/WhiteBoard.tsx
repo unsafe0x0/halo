@@ -26,9 +26,15 @@ const WhiteBoard = () => {
       </div>
     );
 
+  const licenseKey = process.env.NEXT_PUBLIC_TLDRAW_LICENSE_KEY;
+
   return (
     <div className="w-full h-full overflow-hidden">
-      <Tldraw autoFocus persistenceKey="halo-whiteboard" />
+      <Tldraw
+        licenseKey={licenseKey}
+        autoFocus
+        persistenceKey="halo-whiteboard"
+      />
     </div>
   );
 };

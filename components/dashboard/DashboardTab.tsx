@@ -67,9 +67,9 @@ const DashboardTab = ({
                   <p className="text-3xl font-bold text-foreground">
                     {recentScores.length > 0
                       ? (
-                          recentScores.reduce((a, b) => a + b, 0) /
-                          recentScores.length
-                        ).toFixed(1)
+                        recentScores.reduce((a, b) => a + b, 0) /
+                        recentScores.length
+                      ).toFixed(1)
                       : "0"}
                   </p>
                 </div>

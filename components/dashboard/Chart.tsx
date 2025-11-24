@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useMemo } from "react";
-import { useTheme } from "next-themes";
 import {
   BarChart,
   Bar,
@@ -23,9 +22,6 @@ const normalizeScore = (score: number) => {
 };
 
 const BarTimeChart = ({ dates, scoreData }: ChartProps) => {
-  const { theme } = useTheme();
-  const isDark = theme === "dark";
-
   const chartData = useMemo(() => {
     return dates.map((date, i) => ({
       name: `${date} #${i + 1}`,
@@ -34,13 +30,12 @@ const BarTimeChart = ({ dates, scoreData }: ChartProps) => {
     }));
   }, [dates, scoreData]);
 
-  const paddedMax = 10;
-
-  const bgColor = isDark ? "#1a1a1a" : "#f6f6f6";
-  const gridColor = isDark ? "#282828" : "#e2e8f0";
-  const textColor = isDark ? "#ffffff" : "#0a0a0a";
-  const mutedColor = isDark ? "#f5f5f5" : "#0a0a0a";
-  const accentColor = "#7f22fe";
+  // Using CSS variables for theming
+  const bgColor = "var(--card)";
+  const gridColor = "var(--border)";
+  const textColor = "var(--foreground)";
+  const mutedColor = "var(--foreground-1)";
+  const accentColor = "var(--accent)";
 
   return (
     <div className="w-full h-[300px]">
@@ -55,6 +50,7 @@ const BarTimeChart = ({ dates, scoreData }: ChartProps) => {
             dataKey="name"
             stroke={mutedColor}
             style={{ fontSize: "12px", fill: mutedColor }}
+            tick={{ fill: mutedColor }}
           />
           <YAxis
             domain={[0, 10]}
@@ -63,6 +59,7 @@ const BarTimeChart = ({ dates, scoreData }: ChartProps) => {
             stroke={mutedColor}
             style={{ fontSize: "12px", fill: mutedColor }}
             tickFormatter={(value) => `${value}`}
+            tick={{ fill: mutedColor }}
           />
           <Tooltip
             formatter={(value, name, { payload }) => {
@@ -70,18 +67,20 @@ const BarTimeChart = ({ dates, scoreData }: ChartProps) => {
             }}
             contentStyle={{
               backgroundColor: bgColor,
-              border: `1px solid ${accentColor}`,
+              border: `1px solid ${gridColor}`,
               borderRadius: "8px",
               color: textColor,
+              boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)",
             }}
             labelStyle={{
               color: accentColor,
               fontWeight: 600,
+              marginBottom: "0.25rem",
             }}
             itemStyle={{
               color: textColor,
             }}
-            cursor={{ fill: `${accentColor}20` }}
+            cursor={{ fill: accentColor, opacity: 0.1 }}
           />
           <Bar
             dataKey="score"
