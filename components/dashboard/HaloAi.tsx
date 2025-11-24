@@ -5,6 +5,8 @@ import ModelDropdown from "../common/ModelDropdown";
 import Button from "../common/Button";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { LuSendHorizontal } from "react-icons/lu";
+import { motion, AnimatePresence } from "framer-motion";
+import { fadeInUp, scaleIn, fadeIn } from "@/utils/animations";
 
 interface Message {
   id: string;
@@ -189,7 +191,12 @@ const HaloAi = () => {
 
       <div className="flex-1 overflow-y-auto p-4 md:p-6 flex flex-col gap-4 mb-32 pt-16">
         {messages.length === 0 ? (
-          <div className="flex-1 flex items-center justify-center text-center">
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={scaleIn}
+            className="flex-1 flex items-center justify-center text-center"
+          >
             <div className="space-y-4">
               <h2 className="text-2xl font-semibold text-foreground">
                 Welcome to Halo AI
@@ -198,42 +205,52 @@ const HaloAi = () => {
                 Select a model and start asking questions
               </p>
             </div>
-          </div>
+          </motion.div>
         ) : (
           messages.map((message) => (
-            <div
+            <motion.div
               key={message.id}
-              className={`flex ${
-                message.role === "user" ? "justify-end" : "justify-start"
-              }`}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+              className={`flex ${message.role === "user" ? "justify-end" : "justify-start"
+                }`}
             >
               <div
-                className={`${
-                  message.role === "user"
+                className={`${message.role === "user"
                     ? "bg-accent text-accent-foreground rounded-br-none"
                     : "bg-card border border-border text-foreground rounded-bl-none"
-                } px-4 py-3 rounded-lg`}
+                  } px-4 py-3 rounded-lg`}
                 style={{ maxWidth: "90%" }}
               >
                 <p className="text-sm md:text-base whitespace-pre-wrap wrap-break-word">
                   {message.content}
                 </p>
               </div>
-            </div>
+            </motion.div>
           ))
         )}
         {sendMessage.isPending && (
-          <div className="flex justify-start">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex justify-start"
+          >
             <div className="bg-card border border-border text-foreground px-4 py-3 rounded-lg rounded-bl-none flex items-center gap-2">
               <AiOutlineLoading3Quarters className="w-4 h-4 animate-spin" />
               <span className="text-sm">Thinking...</span>
             </div>
-          </div>
+          </motion.div>
         )}
         <div ref={messagesEndRef} />
       </div>
 
-      <div className="fixed bottom-0 left-0 lg:left-64 right-0 p-4 md:p-6 border-t border-border bg-card">
+      <motion.div
+        initial={{ y: 100 }}
+        animate={{ y: 0 }}
+        transition={{ type: "spring", stiffness: 100, damping: 20 }}
+        className="fixed bottom-0 left-0 lg:left-64 right-0 p-4 md:p-6 border-t border-border bg-card"
+      >
         <div className="relative">
           <textarea
             ref={textareaRef}
@@ -275,7 +292,7 @@ const HaloAi = () => {
             </Button>
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };

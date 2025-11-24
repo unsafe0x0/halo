@@ -6,6 +6,8 @@ import InterviewCard from "./InterviewCard";
 import { LuTarget } from "react-icons/lu";
 import { AiOutlineLineChart } from "react-icons/ai";
 import { TiStar } from "react-icons/ti";
+import { motion } from "framer-motion";
+import { fadeInUp, staggerContainer } from "@/utils/animations";
 
 interface DashboardTabProps {
   interviews?: Array<{
@@ -33,18 +35,26 @@ const DashboardTab = ({
   const recentDates = dates.slice(0, 5);
 
   return (
-    <div className="p-4 md:p-6 lg:p-8 flex-1 overflow-y-auto">
+    <motion.div
+      className="p-4 md:p-6 lg:p-8 flex-1 overflow-y-auto"
+      variants={staggerContainer}
+      initial="hidden"
+      animate="visible"
+    >
       <div className="flex-1 mx-auto">
-        <div className="mb-8">
+        <motion.div variants={fadeInUp} className="mb-8">
           <h1 className="text-3xl font-bold text-foreground mb-2">Dashboard</h1>
           <p className="text-foreground-1 text-base">
             Welcome to your dashboard section
           </p>
-        </div>
+        </motion.div>
 
         <div className="flex flex-col gap-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="bg-card border border-border rounded-lg p-6">
+          <motion.div
+            variants={staggerContainer}
+            className="grid grid-cols-1 md:grid-cols-3 gap-4"
+          >
+            <motion.div variants={fadeInUp} className="bg-card border border-border rounded-lg p-6">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-foreground-1 text-sm mb-1">
@@ -56,9 +66,9 @@ const DashboardTab = ({
                 </div>
                 <LuTarget className="w-10 h-10 text-accent" />
               </div>
-            </div>
+            </motion.div>
 
-            <div className="bg-card border border-border rounded-lg p-6">
+            <motion.div variants={fadeInUp} className="bg-card border border-border rounded-lg p-6">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-foreground-1 text-sm mb-1">
@@ -75,9 +85,9 @@ const DashboardTab = ({
                 </div>
                 <AiOutlineLineChart className="w-10 h-10 text-accent" />
               </div>
-            </div>
+            </motion.div>
 
-            <div className="bg-card border border-border rounded-lg p-6">
+            <motion.div variants={fadeInUp} className="bg-card border border-border rounded-lg p-6">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-foreground-1 text-sm mb-1">Best Score</p>
@@ -87,35 +97,39 @@ const DashboardTab = ({
                 </div>
                 <TiStar className="w-10 h-10 text-accent" />
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
-          <div>
+          <motion.div variants={fadeInUp}>
             <h2 className="text-xl font-bold text-foreground mb-4">
               Recent Interviews
             </h2>
             {recentInterviews.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <motion.div
+                variants={staggerContainer}
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+              >
                 {recentInterviews.map((interview) => (
-                  <InterviewCard
-                    key={interview.interviewId}
-                    model={interview.model}
-                    position={interview.position}
-                    status={interview.status}
-                    strengths={interview.strengths}
-                    improvements={interview.improvements}
-                    score={interview.score}
-                    interviewId={interview.interviewId}
-                  />
+                  <motion.div key={interview.interviewId} variants={fadeInUp}>
+                    <InterviewCard
+                      model={interview.model}
+                      position={interview.position}
+                      status={interview.status}
+                      strengths={interview.strengths}
+                      improvements={interview.improvements}
+                      score={interview.score}
+                      interviewId={interview.interviewId}
+                    />
+                  </motion.div>
                 ))}
-              </div>
+              </motion.div>
             ) : (
               <div className="bg-card border border-border rounded-lg p-8 text-center">
                 <p className="text-foreground-1">No interviews yet.</p>
               </div>
             )}
-          </div>
-          <div>
+          </motion.div>
+          <motion.div variants={fadeInUp}>
             <h2 className="text-xl font-bold text-foreground mb-4">
               Recent Score Trends
             </h2>
@@ -130,10 +144,10 @@ const DashboardTab = ({
                 </p>
               </div>
             )}
-          </div>
+          </motion.div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

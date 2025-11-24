@@ -1,6 +1,8 @@
 "use client";
 
 import React from "react";
+import { motion } from "framer-motion";
+import { fadeIn, fadeInUp, staggerContainer } from "@/utils/animations";
 
 const HowItWorks = () => {
   const steps = [
@@ -33,19 +35,38 @@ const HowItWorks = () => {
   return (
     <section id="how-it-works" className="py-20 md:py-32">
       <div className="max-w-7xl mx-auto px-4 md:px-6">
-        <div className="flex flex-col gap-16">
+        <motion.div
+          className="flex flex-col gap-16"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={staggerContainer}
+        >
           <div className="flex flex-col gap-4 text-center">
-            <h2 className="text-3xl md:text-5xl font-bold leading-tight">
+            <motion.h2
+              variants={fadeInUp}
+              className="text-3xl md:text-5xl font-bold leading-tight"
+            >
               Four Simple Steps to Success
-            </h2>
-            <p className="text-lg text-foreground-1 max-w-2xl mx-auto">
+            </motion.h2>
+            <motion.p
+              variants={fadeInUp}
+              className="text-lg text-foreground-1 max-w-2xl mx-auto"
+            >
               Get started with Halo in minutes and begin your interview
               preparation journey.
-            </p>
+            </motion.p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-4 w-full">
+          <motion.div
+            variants={staggerContainer}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-4 w-full"
+          >
             {steps.map((step, index) => (
-              <div key={index} className="relative group">
+              <motion.div
+                key={index}
+                variants={fadeInUp}
+                className="relative group"
+              >
                 <div className="flex flex-col gap-4 h-full p-6 rounded-xl bg-card border border-border hover:ring-2 hover:ring-accent transition-all duration-300">
                   <div className="relative">
                     <span className="text-accent-foreground font-bold text-xl w-10 h-10 rounded-full bg-accent flex items-center justify-center">
@@ -61,10 +82,10 @@ const HowItWorks = () => {
                     </p>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );

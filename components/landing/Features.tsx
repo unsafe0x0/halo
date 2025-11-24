@@ -7,6 +7,8 @@ import { BiSolidBarChartAlt2 } from "react-icons/bi";
 import { FaRegCheckCircle } from "react-icons/fa";
 import { LuTarget } from "react-icons/lu";
 import { FiZap } from "react-icons/fi";
+import { motion } from "framer-motion";
+import { fadeIn, fadeInUp, staggerContainer } from "@/utils/animations";
 
 const Features = () => {
   const features = [
@@ -31,7 +33,8 @@ const Features = () => {
     {
       icon: PiSpeakerHighBold,
       title: "Voice Mode",
-      description: "Practice with voice to prepare for actual interviews.",
+      description:
+        "Practice with voice to prepare for actual interviews.",
     },
     {
       icon: IoBookmark,
@@ -50,22 +53,38 @@ const Features = () => {
   return (
     <section id="features" className="py-20 md:py-32">
       <div className="max-w-7xl mx-auto px-4 md:px-6">
-        <div className="flex flex-col gap-16">
+        <motion.div
+          className="flex flex-col gap-16"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={staggerContainer}
+        >
           <div className="flex flex-col gap-4 text-center">
-            <h2 className="text-3xl md:text-5xl font-bold leading-tight">
+            <motion.h2
+              variants={fadeInUp}
+              className="text-3xl md:text-5xl font-bold leading-tight"
+            >
               Everything You Need to Succeed
-            </h2>
+            </motion.h2>
 
-            <p className="text-lg text-foreground-1 max-w-2xl mx-auto">
+            <motion.p
+              variants={fadeInUp}
+              className="text-lg text-foreground-1 max-w-2xl mx-auto"
+            >
               Comprehensive tools and features designed to help you ace your
               interviews and land your dream job.
-            </p>
+            </motion.p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <motion.div
+            variants={staggerContainer}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          >
             {features.map((feature, index) => (
-              <div
+              <motion.div
                 key={index}
+                variants={fadeInUp}
                 className="group p-6 md:p-8 rounded-xl bg-card border border-border hover:ring-2 hover:ring-accent hover:bg-card-1 transition-all duration-300"
               >
                 <div className="flex flex-col gap-4">
@@ -80,10 +99,10 @@ const Features = () => {
                     </p>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );

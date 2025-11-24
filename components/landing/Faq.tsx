@@ -2,6 +2,8 @@
 
 import React, { useState } from "react";
 import { FaChevronDown } from "react-icons/fa";
+import { motion, AnimatePresence } from "framer-motion";
+import { fadeInUp, staggerContainer } from "@/utils/animations";
 
 const faqs = [
   {
@@ -37,20 +39,39 @@ const Faq = () => {
   return (
     <section id="faq" className="py-20 md:py-32">
       <div className="max-w-4xl mx-auto px-4 md:px-6">
-        <div className="flex flex-col gap-8 text-center mb-12">
-          <h2 className="text-3xl md:text-5xl font-bold leading-tight">
+        <motion.div
+          className="flex flex-col gap-8 text-center mb-12"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={staggerContainer}
+        >
+          <motion.h2
+            variants={fadeInUp}
+            className="text-3xl md:text-5xl font-bold leading-tight"
+          >
             Frequently Asked Questions
-          </h2>
-          <p className="text-lg text-foreground-1 max-w-2xl mx-auto">
+          </motion.h2>
+          <motion.p
+            variants={fadeInUp}
+            className="text-lg text-foreground-1 max-w-2xl mx-auto"
+          >
             Everything you need to know about Halo and AI-powered interview
             prep.
-          </p>
-        </div>
-        <div className="flex flex-col gap-6">
+          </motion.p>
+        </motion.div>
+        <motion.div
+          className="flex flex-col gap-6"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={staggerContainer}
+        >
           {faqs.map((faq, idx) => (
-            <div
+            <motion.div
               key={idx}
-              className="bg-card border border-border rounded-lg p-5 text-left"
+              variants={fadeInUp}
+              className="bg-card border border-border rounded-lg p-5 text-left overflow-hidden"
             >
               <button
                 className="w-full flex items-center justify-between text-lg font-medium text-foreground focus:outline-none"
@@ -58,21 +79,29 @@ const Faq = () => {
                 aria-expanded={openIndex === idx}
               >
                 <span>{faq.question}</span>
-                <FaChevronDown
-                  className={`ml-2 transition-transform ${
-                    openIndex === idx ? "rotate-180" : "rotate-0"
-                  }`}
-                  size={18}
-                />
+                <motion.div
+                  animate={{ rotate: openIndex === idx ? 180 : 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <FaChevronDown className="ml-2" size={18} />
+                </motion.div>
               </button>
-              {openIndex === idx && (
-                <div className="mt-4 text-foreground-1 text-base leading-relaxed">
-                  {faq.answer}
-                </div>
-              )}
-            </div>
+              <AnimatePresence>
+                {openIndex === idx && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0, marginTop: 0 }}
+                    animate={{ height: "auto", opacity: 1, marginTop: 16 }}
+                    exit={{ height: 0, opacity: 0, marginTop: 0 }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                    className="text-foreground-1 text-base leading-relaxed"
+                  >
+                    {faq.answer}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

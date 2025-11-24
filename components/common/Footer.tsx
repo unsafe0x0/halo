@@ -4,6 +4,8 @@ import React from "react";
 import Link from "next/link";
 import { FaLinkedin, FaTwitter, FaGithub } from "react-icons/fa";
 import { HiOutlineMail } from "react-icons/hi";
+import { motion } from "framer-motion";
+import { fadeInUp } from "@/utils/animations";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -59,7 +61,13 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-card border-t border-border text-foreground">
+    <motion.footer
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-100px" }}
+      variants={fadeInUp}
+      className="bg-card border-t border-border text-foreground"
+    >
       <div className="max-w-7xl mx-auto px-4 md:px-6 py-12 md:py-20">
         <div className="grid grid-cols-2 md:grid-cols-5 gap-8 pb-12 border-b border-border">
           <div className="col-span-2 md:col-span-1 flex flex-col gap-4">
@@ -137,7 +145,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-    </footer>
+    </motion.footer>
   );
 };
 

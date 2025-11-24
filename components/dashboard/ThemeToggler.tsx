@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import { BsSun, BsMoon } from "react-icons/bs";
 import { IoDesktop } from "react-icons/io5";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface ThemeTogglerProps {
   isCollapsed?: boolean;
@@ -40,7 +41,17 @@ const ThemeToggler = ({ isCollapsed = false }: ThemeTogglerProps) => {
         className="flex items-center justify-center w-full p-2 rounded-lg text-foreground hover:bg-card"
         title={currentTheme?.label}
       >
-        <CurrentIcon size={20} />
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.div
+            key={theme}
+            initial={{ y: -10, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 10, opacity: 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            <CurrentIcon size={20} />
+          </motion.div>
+        </AnimatePresence>
       </button>
     );
   }
@@ -51,7 +62,17 @@ const ThemeToggler = ({ isCollapsed = false }: ThemeTogglerProps) => {
       className="flex items-center gap-3 w-full px-4 py-3 rounded-lg font-medium text-foreground hover:bg-card justify-start"
     >
       <span className="shrink-0">
-        <CurrentIcon size={20} />
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.div
+            key={theme}
+            initial={{ rotate: -90, opacity: 0 }}
+            animate={{ rotate: 0, opacity: 1 }}
+            exit={{ rotate: 90, opacity: 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            <CurrentIcon size={20} />
+          </motion.div>
+        </AnimatePresence>
       </span>
       <span className="truncate flex-1 text-left text-sm">
         {currentTheme?.label || "Theme"}

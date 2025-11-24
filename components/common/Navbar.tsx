@@ -3,13 +3,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { BiMenu } from "react-icons/bi";
-import { BsMoon, BsSun } from "react-icons/bs";
-import { useTheme } from "next-themes";
 import { useSession, signOut } from "next-auth/react";
 import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
+import { fadeInDown } from "@/utils/animations";
+import NavbarThemeToggler from "./NavbarThemeToggler";
 
 const Navbar = () => {
-  const { theme, setTheme } = useTheme();
   const { data: session } = useSession();
   const [mounted, setMounted] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -37,8 +37,6 @@ const Navbar = () => {
 
   if (!mounted) return null;
 
-  const isDark = theme === "dark";
-
   const navItems = [
     { label: "Home", href: "/" },
     { label: "Features", href: "#features" },
@@ -46,7 +44,12 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="fixed w-full top-0 z-50 border-b border-border bg-background text-foreground">
+    <motion.nav
+      initial="hidden"
+      animate="visible"
+      variants={fadeInDown}
+      className="fixed w-full top-0 z-50 border-b border-border bg-background text-foreground"
+    >
       <div className="max-w-7xl mx-auto px-4 md:px-6 py-2 w-full">
         <div className="flex justify-between items-center">
           <Link href="/" className="flex items-center">
@@ -68,13 +71,7 @@ const Navbar = () => {
           </div>
 
           <div className="flex items-center gap-3">
-            <button
-              onClick={() => setTheme(isDark ? "light" : "dark")}
-              className="p-2 rounded-lg hover:bg-card transition-colors"
-              aria-label="Toggle theme"
-            >
-              {isDark ? <BsSun size={18} /> : <BsMoon size={18} />}
-            </button>
+            <NavbarThemeToggler />
 
             {session?.user ? (
               <div ref={profileMenuRef} className="relative">
@@ -99,37 +96,45 @@ const Navbar = () => {
                   )}
                 </button>
 
-                {profileMenuOpen && (
-                  <div className="absolute right-0 mt-2 w-56 bg-card border border-border rounded-lg z-50">
-                    <div className="px-4 py-3 border-b border-border">
-                      <p className="text-sm font-semibold text-foreground">
-                        {session.user.name}
-                      </p>
-                      <p className="text-xs text-foreground-1">
-                        {session.user.email}
-                      </p>
-                    </div>
-                    <div className="py-2">
-                      <Link href="/dashboard" className="w-full">
+                <AnimatePresence>
+                  {profileMenuOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 10 }}
+                      transition={{ duration: 0.2 }}
+                      className="absolute right-0 mt-2 w-56 bg-card border border-border rounded-lg z-50 shadow-lg"
+                    >
+                      <div className="px-4 py-3 border-b border-border">
+                        <p className="text-sm font-semibold text-foreground">
+                          {session.user.name}
+                        </p>
+                        <p className="text-xs text-foreground-1">
+                          {session.user.email}
+                        </p>
+                      </div>
+                      <div className="py-2">
+                        <Link href="/dashboard" className="w-full">
+                          <button
+                            onClick={() => setProfileMenuOpen(false)}
+                            className="flex items-center w-full px-4 py-2 text-sm text-foreground hover:bg-card-1 transition-colors"
+                          >
+                            Dashboard
+                          </button>
+                        </Link>
                         <button
-                          onClick={() => setProfileMenuOpen(false)}
+                          onClick={() => {
+                            setProfileMenuOpen(false);
+                            signOut();
+                          }}
                           className="flex items-center w-full px-4 py-2 text-sm text-foreground hover:bg-card-1 transition-colors"
                         >
-                          Dashboard
+                          Logout
                         </button>
-                      </Link>
-                      <button
-                        onClick={() => {
-                          setProfileMenuOpen(false);
-                          signOut();
-                        }}
-                        className="flex items-center w-full px-4 py-2 text-sm text-foreground hover:bg-card-1 transition-colors"
-                      >
-                        Logout
-                      </button>
-                    </div>
-                  </div>
-                )}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             ) : (
               <Link href="/sign-in" className="hidden md:inline-flex">
@@ -150,56 +155,64 @@ const Navbar = () => {
         </div>
       </div>
 
-      {mobileMenuOpen && (
-        <div className="block md:hidden border-t border-border bg-background">
-          <div className="max-w-7xl mx-auto px-4 py-4 flex flex-col gap-2">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="text-base text-foreground hover:text-accent p-1.5 transition-colors font-medium hover:bg-card rounded-md"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                {item.label}
-              </Link>
-            ))}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="block md:hidden border-t border-border bg-background overflow-hidden"
+          >
+            <div className="max-w-7xl mx-auto px-4 py-4 flex flex-col gap-2">
+              {navItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="text-base text-foreground hover:text-accent p-1.5 transition-colors font-medium hover:bg-card rounded-md"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {item.label}
+                </Link>
+              ))}
 
-            {session?.user ? (
-              <>
-                <div className="mt-4 pt-4 border-t border-border">
-                  <p className="text-sm font-semibold text-foreground px-1.5 py-2">
-                    {session.user.name}
-                  </p>
-                  <Link href="/dashboard" className="w-full block">
+              {session?.user ? (
+                <>
+                  <div className="mt-4 pt-4 border-t border-border">
+                    <p className="text-sm font-semibold text-foreground px-1.5 py-2">
+                      {session.user.name}
+                    </p>
+                    <Link href="/dashboard" className="w-full block">
+                      <button
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="w-full px-4 py-2 text-sm text-foreground hover:bg-card rounded-md transition-colors text-left"
+                      >
+                        Dashboard
+                      </button>
+                    </Link>
                     <button
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="w-full px-4 py-2 text-sm text-foreground hover:bg-card rounded-md transition-colors text-left"
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        signOut();
+                      }}
+                      className="flex items-center w-full px-4 py-2 text-sm text-foreground hover:bg-card rounded-md transition-colors mt-2"
                     >
-                      Dashboard
+                      Logout
                     </button>
-                  </Link>
-                  <button
-                    onClick={() => {
-                      setMobileMenuOpen(false);
-                      signOut();
-                    }}
-                    className="flex items-center w-full px-4 py-2 text-sm text-foreground hover:bg-card rounded-md transition-colors mt-2"
-                  >
-                    Logout
+                  </div>
+                </>
+              ) : (
+                <Link href="/sign-in" className="w-full mt-4 block">
+                  <button className="w-full px-4 py-2 bg-accent text-accent-foreground rounded-md cursor-pointer hover:opacity-90 transition-opacity">
+                    Sign in
                   </button>
-                </div>
-              </>
-            ) : (
-              <Link href="/sign-in" className="w-full mt-4 block">
-                <button className="w-full px-4 py-2 bg-accent text-accent-foreground rounded-md cursor-pointer hover:opacity-90 transition-opacity">
-                  Sign in
-                </button>
-              </Link>
-            )}
-          </div>
-        </div>
-      )}
-    </nav>
+                </Link>
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.nav>
   );
 };
 

@@ -1,6 +1,8 @@
 "use client";
 
 import React from "react";
+import { motion } from "framer-motion";
+import { scaleIn } from "@/utils/animations";
 
 interface InterviewCardProps {
   model: string;
@@ -50,7 +52,11 @@ const InterviewCard: React.FC<InterviewCardProps> = ({
   };
 
   return (
-    <div className="bg-card border border-border rounded-lg overflow-hidden transition-all hover:ring-2 hover:ring-accent">
+    <motion.div
+      className="bg-card border border-border rounded-lg overflow-hidden transition-all hover:ring-2 hover:ring-accent"
+      whileHover={{ scale: 1.02 }}
+      transition={{ duration: 0.2 }}
+    >
       <div className="p-5 pb-3 border-b border-border/50">
         <div className="flex items-start justify-between gap-3 mb-3">
           <div className="flex-1 min-w-0">
@@ -121,7 +127,7 @@ const InterviewCard: React.FC<InterviewCardProps> = ({
           </ul>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

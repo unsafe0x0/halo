@@ -7,6 +7,8 @@ import InterviewCard from "./InterviewCard";
 import { LuTarget } from "react-icons/lu";
 import { AiOutlineLineChart } from "react-icons/ai";
 import { TiStar } from "react-icons/ti";
+import { motion } from "framer-motion";
+import { fadeInUp, staggerContainer } from "@/utils/animations";
 
 interface InterviewData {
   id: string;
@@ -95,9 +97,14 @@ const InterviewsTab: React.FC<InterviewsTabProps> = ({ interviews }) => {
 
   return (
     <>
-      <div className="p-4 md:p-6 lg:p-8 flex-1 overflow-auto">
+      <motion.div
+        className="p-4 md:p-6 lg:p-8 flex-1 overflow-auto"
+        variants={staggerContainer}
+        initial="hidden"
+        animate="visible"
+      >
         <div className="flex-1 mx-auto">
-          <div className="mb-8">
+          <motion.div variants={fadeInUp} className="mb-8">
             <h1 className="text-3xl font-bold text-foreground mb-2">
               Interviews
             </h1>
@@ -107,10 +114,13 @@ const InterviewsTab: React.FC<InterviewsTabProps> = ({ interviews }) => {
             <Button onClick={() => setIsDialogOpen(true)} className="mt-5">
               New Interview
             </Button>
-          </div>
+          </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-            <div className="bg-card border border-border rounded-lg p-6">
+          <motion.div
+            variants={staggerContainer}
+            className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6"
+          >
+            <motion.div variants={fadeInUp} className="bg-card border border-border rounded-lg p-6">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-foreground-1 text-sm mb-1">
@@ -122,9 +132,9 @@ const InterviewsTab: React.FC<InterviewsTabProps> = ({ interviews }) => {
                 </div>
                 <LuTarget className="w-10 h-10 text-accent" />
               </div>
-            </div>
+            </motion.div>
 
-            <div className="bg-card border border-border rounded-lg p-6">
+            <motion.div variants={fadeInUp} className="bg-card border border-border rounded-lg p-6">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-foreground-1 text-sm mb-1">
@@ -133,19 +143,19 @@ const InterviewsTab: React.FC<InterviewsTabProps> = ({ interviews }) => {
                   <p className="text-3xl font-bold text-foreground">
                     {interviews.length > 0
                       ? (
-                          interviews.reduce(
-                            (sum, interview) => sum + interview.score,
-                            0,
-                          ) / interviews.length
-                        ).toFixed(1)
+                        interviews.reduce(
+                          (sum, interview) => sum + interview.score,
+                          0,
+                        ) / interviews.length
+                      ).toFixed(1)
                       : "0"}
                   </p>
                 </div>
                 <AiOutlineLineChart className="w-10 h-10 text-accent" />
               </div>
-            </div>
+            </motion.div>
 
-            <div className="bg-card border border-border rounded-lg p-6">
+            <motion.div variants={fadeInUp} className="bg-card border border-border rounded-lg p-6">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-foreground-1 text-sm mb-1">Best Score</p>
@@ -157,31 +167,35 @@ const InterviewsTab: React.FC<InterviewsTabProps> = ({ interviews }) => {
                 </div>
                 <TiStar className="w-10 h-10 text-accent" />
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
-          <div className="w-full">
+          <motion.div variants={fadeInUp} className="w-full">
             {interviews && interviews.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <motion.div
+                variants={staggerContainer}
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+              >
                 {interviews.map((interview: InterviewData) => (
-                  <InterviewCard
-                    key={interview.id}
-                    model={interview.model}
-                    position={interview.position}
-                    status={interview.status}
-                    strengths={interview.strengths}
-                    improvements={interview.improvements}
-                    score={interview.score}
-                    interviewId={interview.id}
-                    onViewDetails={() =>
-                      console.log("View details for:", interview.id)
-                    }
-                    onDownloadReport={() =>
-                      console.log("Download report for:", interview.id)
-                    }
-                  />
+                  <motion.div key={interview.id} variants={fadeInUp}>
+                    <InterviewCard
+                      model={interview.model}
+                      position={interview.position}
+                      status={interview.status}
+                      strengths={interview.strengths}
+                      improvements={interview.improvements}
+                      score={interview.score}
+                      interviewId={interview.id}
+                      onViewDetails={() =>
+                        console.log("View details for:", interview.id)
+                      }
+                      onDownloadReport={() =>
+                        console.log("Download report for:", interview.id)
+                      }
+                    />
+                  </motion.div>
                 ))}
-              </div>
+              </motion.div>
             ) : (
               <div className="bg-card border border-border rounded-lg p-12 text-center">
                 <h3 className="text-lg font-semibold text-foreground mb-2">
@@ -192,7 +206,7 @@ const InterviewsTab: React.FC<InterviewsTabProps> = ({ interviews }) => {
                 </p>
               </div>
             )}
-          </div>
+          </motion.div>
         </div>
 
         <NewInterview
@@ -200,7 +214,7 @@ const InterviewsTab: React.FC<InterviewsTabProps> = ({ interviews }) => {
           onClose={() => setIsDialogOpen(false)}
           onStart={handleStartInterview}
         />
-      </div>
+      </motion.div>
 
       <CallingAi
         isActive={isCallActive}

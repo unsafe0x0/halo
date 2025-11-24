@@ -11,6 +11,8 @@ import {
   ResponsiveContainer,
   Cell,
 } from "recharts";
+import { motion } from "framer-motion";
+import { fadeIn } from "@/utils/animations";
 
 interface ChartProps {
   dates: string[];
@@ -30,7 +32,6 @@ const BarTimeChart = ({ dates, scoreData }: ChartProps) => {
     }));
   }, [dates, scoreData]);
 
-  // Using CSS variables for theming
   const bgColor = "var(--card)";
   const gridColor = "var(--border)";
   const textColor = "var(--foreground)";
@@ -38,7 +39,12 @@ const BarTimeChart = ({ dates, scoreData }: ChartProps) => {
   const accentColor = "var(--accent)";
 
   return (
-    <div className="w-full h-[300px]">
+    <motion.div
+      className="w-full h-[300px]"
+      initial="hidden"
+      animate="visible"
+      variants={fadeIn}
+    >
       <ResponsiveContainer width="100%" height="100%">
         <BarChart
           data={chartData}
@@ -86,7 +92,8 @@ const BarTimeChart = ({ dates, scoreData }: ChartProps) => {
             dataKey="score"
             radius={[4, 4, 0, 0]}
             name="Score"
-            animationDuration={400}
+            animationDuration={1500}
+            animationEasing="ease-out"
           >
             {chartData.map((_, i) => (
               <Cell key={`cell-${i}`} fill={accentColor} />
@@ -94,7 +101,7 @@ const BarTimeChart = ({ dates, scoreData }: ChartProps) => {
           </Bar>
         </BarChart>
       </ResponsiveContainer>
-    </div>
+    </motion.div>
   );
 };
 

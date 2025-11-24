@@ -6,6 +6,8 @@ import { signIn } from "next-auth/react";
 import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
 import { FaGoogle } from "react-icons/fa";
+import { motion } from "framer-motion";
+import { scaleIn } from "@/utils/animations";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -62,7 +64,12 @@ const SignIn = () => {
 
   return (
     <div className="min-h-screen flex items-center py-20 px-2">
-      <div className="max-w-md mx-auto w-full p-6 rounded-lg bg-card border border-border">
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        variants={scaleIn}
+        className="max-w-md mx-auto w-full p-6 rounded-lg bg-card border border-border"
+      >
         <h2 className="text-3xl font-bold mb-2">Sign in to Halo</h2>
         <p className="text-sm text-foreground-1 mb-6">
           Access personalized AI interview practice and feedback.
@@ -126,7 +133,7 @@ const SignIn = () => {
             </Button>
           </div>
         </form>
-      </div>
+      </motion.div>
     </div>
   );
 };

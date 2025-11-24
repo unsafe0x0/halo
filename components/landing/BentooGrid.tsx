@@ -7,23 +7,43 @@ import { FaVideo } from "react-icons/fa";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import { FaCheck } from "react-icons/fa6";
 import { FaArrowRight } from "react-icons/fa6";
+import { motion } from "framer-motion";
+import { fadeIn, fadeInUp, staggerContainer, scaleIn } from "@/utils/animations";
 
 const BentooGrid = () => {
   return (
     <section className="py-20 md:py-32">
       <div className="max-w-7xl mx-auto px-4 md:px-6">
-        <div className="flex flex-col gap-12">
+        <motion.div
+          className="flex flex-col gap-12"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={staggerContainer}
+        >
           <div className="flex flex-col gap-4 text-center">
-            <h2 className="text-3xl md:text-5xl font-bold leading-tight">
+            <motion.h2
+              variants={fadeInUp}
+              className="text-3xl md:text-5xl font-bold leading-tight"
+            >
               See It In Action
-            </h2>
-            <p className="text-lg text-foreground-1 max-w-2xl mx-auto">
+            </motion.h2>
+            <motion.p
+              variants={fadeInUp}
+              className="text-lg text-foreground-1 max-w-2xl mx-auto"
+            >
               Experience the power of AI-driven interview preparation with our
               intuitive interface.
-            </p>
+            </motion.p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 pointer-events-none select-none items-stretch">
-            <div className="p-6 md:p-8 rounded-xl bg-card border border-border flex flex-col justify-between h-full">
+          <motion.div
+            variants={staggerContainer}
+            className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 pointer-events-none select-none items-stretch"
+          >
+            <motion.div
+              variants={scaleIn}
+              className="p-6 md:p-8 rounded-xl bg-card border border-border flex flex-col justify-between h-full"
+            >
               <div className="flex items-center gap-3 pb-4 border-b border-border mb-4">
                 <BiSolidBarChartAlt2 size={20} className="text-accent" />
                 <h3 className="font-bold">Dashboard Overview</h3>
@@ -77,9 +97,12 @@ const BentooGrid = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
-            <div className="p-6 md:p-8 rounded-xl bg-card border border-border h-full">
+            <motion.div
+              variants={scaleIn}
+              className="p-6 md:p-8 rounded-xl bg-card border border-border h-full"
+            >
               <div className="flex items-center gap-3 pb-4 border-b border-border mb-4">
                 <FaVideo size={20} className="text-accent" />
                 <h3 className="font-bold">New Interview</h3>
@@ -118,9 +141,12 @@ const BentooGrid = () => {
                   Start Interview Session
                 </div>
               </div>
-            </div>
+            </motion.div>
 
-            <div className="p-6 md:p-8 rounded-xl bg-card border border-border flex flex-col h-full">
+            <motion.div
+              variants={scaleIn}
+              className="p-6 md:p-8 rounded-xl bg-card border border-border flex flex-col h-full"
+            >
               <div className="flex items-center gap-3 pb-4 border-b border-border mb-4">
                 <AiOutlineClockCircle size={20} className="text-accent" />
                 <h3 className="font-bold">Live Session</h3>
@@ -170,9 +196,12 @@ const BentooGrid = () => {
                   <FaCheck size={20} />
                 </div>
               </div>
-            </div>
+            </motion.div>
 
-            <div className="p-6 md:p-8 rounded-xl bg-card border border-border h-full">
+            <motion.div
+              variants={scaleIn}
+              className="p-6 md:p-8 rounded-xl bg-card border border-border h-full"
+            >
               <div className="flex items-center gap-3 pb-4 border-b border-border mb-4">
                 <FaRegCheckCircle size={20} className="text-accent" />
                 <h3 className="font-bold">Analysis Report</h3>
@@ -234,9 +263,9 @@ const BentooGrid = () => {
                   </ul>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
+            </motion.div>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );

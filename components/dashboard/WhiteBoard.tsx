@@ -2,6 +2,8 @@
 import React, { useEffect, useState, useMemo } from "react";
 import dynamic from "next/dynamic";
 import "tldraw/tldraw.css";
+import { motion } from "framer-motion";
+import { fadeIn } from "@/utils/animations";
 
 const Tldraw = dynamic(() => import("tldraw").then((mod) => mod.Tldraw), {
   ssr: false,
@@ -29,13 +31,18 @@ const WhiteBoard = () => {
   const licenseKey = process.env.NEXT_PUBLIC_TLDRAW_LICENSE_KEY;
 
   return (
-    <div className="w-full h-full overflow-hidden">
+    <motion.div
+      className="w-full h-full overflow-hidden"
+      initial="hidden"
+      animate="visible"
+      variants={fadeIn}
+    >
       <Tldraw
         licenseKey={licenseKey}
         autoFocus
         persistenceKey="halo-whiteboard"
       />
-    </div>
+    </motion.div>
   );
 };
 

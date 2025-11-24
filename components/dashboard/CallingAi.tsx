@@ -6,6 +6,8 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { MdCallEnd } from "react-icons/md";
 import { IoMic, IoMicOff } from "react-icons/io5";
 import { InterviewDetails } from "./NewInterview";
+import { motion, AnimatePresence } from "framer-motion";
+import { scaleIn, fadeIn } from "@/utils/animations";
 
 interface Message {
   id: string;
@@ -256,101 +258,127 @@ const CallingAi: React.FC<CallingAiProps> = ({
     };
   }, []);
 
-  if (!isActive || !interviewDetails) return null;
-
   return (
-    <div className="fixed inset-0 bg-background z-9999 flex flex-col">
-      <div className="flex-1 overflow-y-auto p-4 md:p-6 flex flex-col gap-4">
-        {messages.length === 0 ? (
-          <div className="flex-1 flex items-center justify-center text-center">
-            <div className="space-y-4">
-              <h3 className="text-xl font-semibold text-foreground">
-                Interview Starting...
-              </h3>
-              <p className="text-foreground-1">
-                Click the microphone to start speaking
-              </p>
-            </div>
-          </div>
-        ) : (
-          messages.map((message) => (
-            <div
-              key={message.id}
-              className={`flex ${message.role === "user" ? "justify-end" : "justify-start"
-                }`}
-            >
-              <div
-                className={`${message.role === "user"
-                    ? "bg-accent text-accent-foreground rounded-br-none"
-                    : "bg-card border border-border text-foreground rounded-bl-none"
-                  } px-4 py-3 rounded-lg`}
-                style={{ maxWidth: "90%" }}
+    <AnimatePresence>
+      {isActive && interviewDetails && (
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          exit="hidden"
+          variants={scaleIn}
+          className="fixed inset-0 bg-background z-9999 flex flex-col"
+        >
+          <div className="flex-1 overflow-y-auto p-4 md:p-6 flex flex-col gap-4">
+            {messages.length === 0 ? (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="flex-1 flex items-center justify-center text-center"
               >
-                <p className="text-sm md:text-base whitespace-pre-wrap wrap-break-word">
-                  {message.content}
-                </p>
-              </div>
-            </div>
-          ))
-        )}
+                <div className="space-y-4">
+                  <h3 className="text-xl font-semibold text-foreground">
+                    Interview Starting...
+                  </h3>
+                  <p className="text-foreground-1">
+                    Click the microphone to start speaking
+                  </p>
+                </div>
+              </motion.div>
+            ) : (
+              messages.map((message) => (
+                <motion.div
+                  key={message.id}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className={`flex ${message.role === "user" ? "justify-end" : "justify-start"
+                    }`}
+                >
+                  <div
+                    className={`${message.role === "user"
+                      ? "bg-accent text-accent-foreground rounded-br-none"
+                      : "bg-card border border-border text-foreground rounded-bl-none"
+                      } px-4 py-3 rounded-lg`}
+                    style={{ maxWidth: "90%" }}
+                  >
+                    <p className="text-sm md:text-base whitespace-pre-wrap wrap-break-word">
+                      {message.content}
+                    </p>
+                  </div>
+                </motion.div>
+              ))
+            )}
 
-        {sendMessage.isPending && (
-          <div className="flex justify-start">
-            <div className="bg-card border border-border text-foreground px-4 py-3 rounded-lg rounded-bl-none flex items-center gap-2">
-              <AiOutlineLoading3Quarters className="w-4 h-4 animate-spin" />
-              <span className="text-sm">Thinking...</span>
+            {sendMessage.isPending && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex justify-start"
+              >
+                <div className="bg-card border border-border text-foreground px-4 py-3 rounded-lg rounded-bl-none flex items-center gap-2">
+                  <AiOutlineLoading3Quarters className="w-4 h-4 animate-spin" />
+                  <span className="text-sm">Thinking...</span>
+                </div>
+              </motion.div>
+            )}
+
+            {isSpeaking && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex justify-start"
+              >
+                <div className="bg-card border border-border text-foreground px-4 py-3 rounded-lg rounded-bl-none flex items-center gap-2">
+                  <div className="flex gap-1">
+                    <div className="w-1 h-4 bg-accent rounded-full animate-pulse"></div>
+                    <div className="w-1 h-4 bg-accent rounded-full animate-pulse delay-100"></div>
+                    <div className="w-1 h-4 bg-accent rounded-full animate-pulse delay-200"></div>
+                  </div>
+                  <span className="text-sm">Speaking...</span>
+                </div>
+              </motion.div>
+            )}
+
+            <div ref={messagesEndRef} />
+          </div>
+
+          {transcript && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="border-t border-border bg-card p-3 md:p-4"
+            >
+              <p className="text-xs text-foreground-1 mb-1">Live Transcript:</p>
+              <p className="text-sm text-foreground">{transcript}</p>
+            </motion.div>
+          )}
+
+          <div className="border-t border-border bg-card p-6 md:p-8">
+            <div className="flex flex-row items-center justify-center gap-4">
+              <Button
+                variant={listening ? "destructive" : "primary"}
+                size="medium"
+                onClick={toggleListening}
+                disabled={isSpeaking}
+                className=""
+              >
+                {listening ? <IoMic size={20} /> : <IoMicOff size={20} />}
+                {listening ? "Listening..." : "Tap to speak"}
+              </Button>
+
+              <Button
+                variant="destructive"
+                size="medium"
+                onClick={handleEndCall}
+                className=""
+              >
+                <MdCallEnd size={20} />
+                End Call
+              </Button>
             </div>
           </div>
-        )}
-
-        {isSpeaking && (
-          <div className="flex justify-start">
-            <div className="bg-card border border-border text-foreground px-4 py-3 rounded-lg rounded-bl-none flex items-center gap-2">
-              <div className="flex gap-1">
-                <div className="w-1 h-4 bg-accent rounded-full animate-pulse"></div>
-                <div className="w-1 h-4 bg-accent rounded-full animate-pulse delay-100"></div>
-                <div className="w-1 h-4 bg-accent rounded-full animate-pulse delay-200"></div>
-              </div>
-              <span className="text-sm">Speaking...</span>
-            </div>
-          </div>
-        )}
-
-        <div ref={messagesEndRef} />
-      </div>
-
-      {transcript && (
-        <div className="border-t border-border bg-card p-3 md:p-4">
-          <p className="text-xs text-foreground-1 mb-1">Live Transcript:</p>
-          <p className="text-sm text-foreground">{transcript}</p>
-        </div>
+        </motion.div>
       )}
-
-      <div className="border-t border-border bg-card p-6 md:p-8">
-        <div className="flex flex-row items-center justify-center gap-4">
-          <Button
-            variant={listening ? "destructive" : "primary"}
-            size="medium"
-            onClick={toggleListening}
-            disabled={isSpeaking}
-            className=""
-          >
-            {listening ? <IoMic size={20} /> : <IoMicOff size={20} />}
-            {listening ? "Listening..." : "Tap to speak"}
-          </Button>
-
-          <Button
-            variant="destructive"
-            size="medium"
-            onClick={handleEndCall}
-            className=""
-          >
-            <MdCallEnd size={20} />
-            End Call
-          </Button>
-        </div>
-      </div>
-    </div>
+    </AnimatePresence>
   );
 };
 

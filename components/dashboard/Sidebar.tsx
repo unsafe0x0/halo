@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { MdDashboard } from "react-icons/md";
 import { FaChalkboard } from "react-icons/fa";
 import { RiBarChartFill, RiMenuFill } from "react-icons/ri";
@@ -15,6 +15,7 @@ import Button from "../common/Button";
 import { useSession, signOut } from "next-auth/react";
 import Image from "next/image";
 import ThemeToggler from "./ThemeToggler";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface SidebarProps {
   activeItem?: string;
@@ -46,17 +47,25 @@ const RenderSidebarItem = ({
   return (
     <button
       onClick={onClick}
-      className={`flex items-center gap-3 w-full px-4 py-3 rounded-lg font-medium ${
-        isActive
-          ? "bg-accent text-accent-foreground"
-          : "text-foreground hover:bg-card"
-      } ${isCollapsed ? "justify-center" : ""}`}
+      className={`flex items-center gap-3 w-full px-4 py-3 rounded-lg font-medium transition-colors ${isActive
+        ? "bg-accent text-accent-foreground"
+        : "text-foreground hover:bg-card"
+        } ${isCollapsed ? "justify-center" : ""}`}
       title={isCollapsed ? label : ""}
     >
       <span className="shrink-0">
         <Icon size={20} />
       </span>
-      {!isCollapsed && <span className="truncate text-sm">{label}</span>}
+      {!isCollapsed && (
+        <motion.span
+          initial={{ opacity: 0, width: 0 }}
+          animate={{ opacity: 1, width: "auto" }}
+          exit={{ opacity: 0, width: 0 }}
+          className="truncate text-sm"
+        >
+          {label}
+        </motion.span>
+      )}
     </button>
   );
 };
@@ -72,36 +81,74 @@ const RenderLogoutButton = ({
     <Button
       variant="destructive"
       size="medium"
-      className={`w-full flex items-center gap-3 ${
-        isCollapsed ? "justify-center" : "justify-start"
-      }`}
+      className={`w-full flex items-center gap-3 ${isCollapsed ? "justify-center" : "justify-start"
+        }`}
       onClick={onClick}
     >
       <span className="shrink-0">
         <MdOutlineLogout size={20} />
       </span>
-      {!isCollapsed && <span className="truncate text-sm">Logout</span>}
+      {!isCollapsed && (
+        <motion.span
+          initial={{ opacity: 0, width: 0 }}
+          animate={{ opacity: 1, width: "auto" }}
+          exit={{ opacity: 0, width: 0 }}
+          className="truncate text-sm"
+        >
+          Logout
+        </motion.span>
+      )}
     </Button>
   );
 };
 
 const RenderUserCard = ({ isCollapsed }: { isCollapsed: boolean }) => {
   const { data: session } = useSession();
+  const [userData, setUserData] = useState<{
+    name?: string | null;
+    email?: string | null;
+    image?: string | null;
+  } | null>(null);
+
+  useEffect(() => {
+    const cached = localStorage.getItem("halo-user-data");
+    if (cached) {
+      try {
+        setUserData(JSON.parse(cached));
+      } catch (e) {
+        console.error("Failed to parse cached user data", e);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (session?.user) {
+      const data = {
+        name: session.user.name,
+        email: session.user.email,
+        image: session.user.image,
+      };
+      setUserData(data);
+      localStorage.setItem("halo-user-data", JSON.stringify(data));
+    }
+  }, [session]);
+
+  const user = session?.user || userData;
 
   if (isCollapsed) {
     return (
       <div className="flex justify-center">
-        {session?.user?.image ? (
+        {user?.image ? (
           <Image
-            src={session.user.image}
-            alt={session.user.name || "User"}
+            src={user.image}
+            alt={user.name || "User"}
             width={40}
             height={40}
             className="rounded-full"
           />
         ) : (
           <div className="w-10 h-10 rounded-full bg-accent flex items-center justify-center text-accent-foreground font-bold text-sm">
-            {session?.user?.name?.charAt(0).toUpperCase() || "U"}
+            {user?.name?.charAt(0).toUpperCase() || "U"}
           </div>
         )}
       </div>
@@ -111,27 +158,32 @@ const RenderUserCard = ({ isCollapsed }: { isCollapsed: boolean }) => {
   return (
     <div className="px-4 py-3">
       <div className="flex items-center gap-3">
-        {session?.user?.image ? (
+        {user?.image ? (
           <Image
-            src={session.user.image}
-            alt={session.user.name || "User"}
+            src={user.image}
+            alt={user.name || "User"}
             width={40}
             height={40}
             className="rounded-full shrink-0"
           />
         ) : (
           <div className="w-10 h-10 rounded-full bg-accent flex items-center justify-center text-accent-foreground font-bold text-sm shrink-0">
-            {session?.user?.name?.charAt(0).toUpperCase() || "U"}
+            {user?.name?.charAt(0).toUpperCase() || "U"}
           </div>
         )}
-        <div className="flex-1 min-w-0">
+        <motion.div
+          initial={{ opacity: 0, width: 0 }}
+          animate={{ opacity: 1, width: "auto" }}
+          exit={{ opacity: 0, width: 0 }}
+          className="flex-1 min-w-0"
+        >
           <p className="text-sm font-semibold text-foreground truncate">
-            {session?.user?.name || "User"}
+            {user?.name || "User"}
           </p>
           <p className="text-xs text-foreground-1 truncate">
-            {session?.user?.email}
+            {user?.email}
           </p>
-        </div>
+        </motion.div>
       </div>
     </div>
   );
@@ -165,19 +217,24 @@ const Sidebar = ({ activeItem = "Dashboard", setActiveItem }: SidebarProps) => {
         />
       )}
 
-      <aside
-        className={`fixed lg:static top-0 left-0 h-screen lg:h-screen bg-background border-r border-border z-50 flex flex-col ${
-          isSidebarOpen ? "w-64" : "-translate-x-full lg:translate-x-0"
-        } ${isCollapsed ? "lg:w-20" : "lg:w-64"} max-w-64`}
+      <motion.aside
+        layout
+        className={`fixed lg:static top-0 left-0 h-screen lg:h-screen bg-background border-r border-border z-50 flex flex-col ${isSidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
+          } ${isCollapsed ? "lg:w-20" : "lg:w-64"} max-w-64 transition-all duration-300 ease-in-out`}
       >
         <div className="hidden lg:flex items-center justify-between px-4 py-2 border-b border-border h-fit">
-          <h2
-            className={`text-lg font-bold text-foreground ${
-              isCollapsed ? "hidden" : ""
-            }`}
-          >
-            Halo
-          </h2>
+          <AnimatePresence>
+            {!isCollapsed && (
+              <motion.h2
+                initial={{ opacity: 0, width: 0 }}
+                animate={{ opacity: 1, width: "auto" }}
+                exit={{ opacity: 0, width: 0 }}
+                className="text-lg font-bold text-foreground overflow-hidden whitespace-nowrap"
+              >
+                Halo
+              </motion.h2>
+            )}
+          </AnimatePresence>
           <button
             onClick={() => setIsCollapsed(!isCollapsed)}
             className="p-2 rounded-lg hover:bg-card text-foreground"
@@ -221,7 +278,7 @@ const Sidebar = ({ activeItem = "Dashboard", setActiveItem }: SidebarProps) => {
             isCollapsed={isCollapsed}
           />
         </div>
-      </aside>
+      </motion.aside>
     </>
   );
 };

@@ -9,6 +9,8 @@ import AnalyticsTab from "./AnalyticsTab";
 import SettingsTab from "./SettingsTab";
 import HaloAi from "./HaloAi";
 import { useQuery } from "@tanstack/react-query";
+import { motion, AnimatePresence } from "framer-motion";
+import { fadeIn } from "@/utils/animations";
 
 const Dashboard = () => {
   const [activeItem, setActiveItem] = useState("Dashboard");
@@ -37,51 +39,95 @@ const Dashboard = () => {
         {isLoading && <div>Loading...</div>}
         {error && <div>Error loading data</div>}
 
-        {activeItem === "Dashboard" && (
-          <div className="h-full overflow-scroll">
-            <DashboardTab
-              interviews={data?.user?.interviews || []}
-              scores={data?.scores || []}
-              dates={data?.dates || []}
-            />
-          </div>
-        )}
-        {activeItem === "Interviews" && (
-          <div className="h-full overflow-scroll">
-            <InterviewsTab interviews={data?.user?.interviews || []} />
-          </div>
-        )}
-        {activeItem === "Analytics" && (
-          <div className="h-full overflow-scroll">
-            <AnalyticsTab
-              scores={data?.scores || []}
-              dates={data?.dates || []}
-            />
-          </div>
-        )}
-        {activeItem === "Halo AI" && (
-          <div className="h-full">
-            <HaloAi />
-          </div>
-        )}
-        {activeItem === "Whiteboard" && (
-          <div className="h-full">
-            <WhiteBoard />
-          </div>
-        )}
-        {activeItem === "Settings" && (
-          <div className="h-full">
-            <SettingsTab
-              userDetails={{
-                name: data?.user?.name,
-                email: data?.user?.email,
-                profileImage: data?.user?.profileImage,
-                githubUsername: data?.user?.githubUsername,
-                apiKey: data?.user?.apiKey,
-              }}
-            />
-          </div>
-        )}
+        <AnimatePresence mode="wait">
+          {activeItem === "Dashboard" && (
+            <motion.div
+              key="dashboard"
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+              variants={fadeIn}
+              className="h-full overflow-scroll"
+            >
+              <DashboardTab
+                interviews={data?.user?.interviews || []}
+                scores={data?.scores || []}
+                dates={data?.dates || []}
+              />
+            </motion.div>
+          )}
+          {activeItem === "Interviews" && (
+            <motion.div
+              key="interviews"
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+              variants={fadeIn}
+              className="h-full overflow-scroll"
+            >
+              <InterviewsTab interviews={data?.user?.interviews || []} />
+            </motion.div>
+          )}
+          {activeItem === "Analytics" && (
+            <motion.div
+              key="analytics"
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+              variants={fadeIn}
+              className="h-full overflow-scroll"
+            >
+              <AnalyticsTab
+                scores={data?.scores || []}
+                dates={data?.dates || []}
+              />
+            </motion.div>
+          )}
+          {activeItem === "Halo AI" && (
+            <motion.div
+              key="halo-ai"
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+              variants={fadeIn}
+              className="h-full"
+            >
+              <HaloAi />
+            </motion.div>
+          )}
+          {activeItem === "Whiteboard" && (
+            <motion.div
+              key="whiteboard"
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+              variants={fadeIn}
+              className="h-full"
+            >
+              <WhiteBoard />
+            </motion.div>
+          )}
+          {activeItem === "Settings" && (
+            <motion.div
+              key="settings"
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+              variants={fadeIn}
+              className="h-full"
+            >
+              <SettingsTab
+                userDetails={{
+                  name: data?.user?.name,
+                  email: data?.user?.email,
+                  profileImage: data?.user?.profileImage,
+                  githubUsername: data?.user?.githubUsername,
+                  apiKey: data?.user?.apiKey,
+                }}
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </main>
     </div>
   );

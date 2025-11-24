@@ -5,6 +5,8 @@ import Input from "@/components/common/Input";
 import Button from "@/components/common/Button";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { motion } from "framer-motion";
+import { fadeInUp, staggerContainer } from "@/utils/animations";
 
 interface UserDetails {
   name?: string;
@@ -67,15 +69,20 @@ const SettingsTab = ({ userDetails }: SettingsTabProps) => {
   };
 
   return (
-    <div className="p-4 md:p-6 lg:p-8 flex-1 overflow-auto">
-      <div className="mb-8">
+    <motion.div
+      className="p-4 md:p-6 lg:p-8 flex-1 overflow-auto"
+      variants={staggerContainer}
+      initial="hidden"
+      animate="visible"
+    >
+      <motion.div variants={fadeInUp} className="mb-8">
         <h1 className="text-3xl font-bold text-foreground mb-2">Settings</h1>
         <p className="text-foreground-1 text-base">
           Update your profile and account information
         </p>
-      </div>
+      </motion.div>
 
-      <div className="mb-8 flex items-center gap-4">
+      <motion.div variants={fadeInUp} className="mb-8 flex items-center gap-4">
         {userDetails.profileImage ? (
           <Image
             src={userDetails.profileImage}
@@ -97,9 +104,9 @@ const SettingsTab = ({ userDetails }: SettingsTabProps) => {
             {userDetails.email || "-"}
           </p>
         </div>
-      </div>
+      </motion.div>
 
-      <form onSubmit={handleSubmit} className="space-y-6  max-w-md">
+      <motion.form variants={fadeInUp} onSubmit={handleSubmit} className="space-y-6  max-w-md">
         <Input
           label="Name"
           type="text"
@@ -144,8 +151,8 @@ const SettingsTab = ({ userDetails }: SettingsTabProps) => {
             {isPending ? "Saving..." : "Save"}
           </Button>
         </div>
-      </form>
-    </div>
+      </motion.form>
+    </motion.div>
   );
 };
 
