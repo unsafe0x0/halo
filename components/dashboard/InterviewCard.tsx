@@ -53,7 +53,7 @@ const InterviewCard: React.FC<InterviewCardProps> = ({
 
   return (
     <motion.div
-      className="bg-card border border-border rounded-lg overflow-hidden transition-all hover:ring-2 hover:ring-accent"
+      className="bg-card border border-border rounded-lg overflow-hidden transition-all hover:ring-2 hover:ring-accent h-full"
       whileHover={{ scale: 1.02 }}
       transition={{ duration: 0.2 }}
     >

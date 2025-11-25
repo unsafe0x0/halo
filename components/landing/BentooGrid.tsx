@@ -8,7 +8,12 @@ import { AiOutlineClockCircle } from "react-icons/ai";
 import { FaCheck } from "react-icons/fa6";
 import { FaArrowRight } from "react-icons/fa6";
 import { motion } from "framer-motion";
-import { fadeIn, fadeInUp, staggerContainer, scaleIn } from "@/utils/animations";
+import {
+  fadeIn,
+  fadeInUp,
+  staggerContainer,
+  scaleIn,
+} from "@/utils/animations";
 
 const BentooGrid = () => {
   return (
@@ -192,7 +197,7 @@ const BentooGrid = () => {
                 <div className="w-12 h-12 rounded-full bg-destructive/10 text-destructive flex items-center justify-center border border-destructive/20 hover:bg-destructive/20 transition-colors">
                   <FaVideo size={20} />
                 </div>
-                <div className="w-12 h-12 rounded-full bg-accent text-accent-foreground flex items-center justify-center shadow-lg shadow-accent/20">
+                <div className="w-12 h-12 rounded-full bg-accent text-accent-foreground flex items-center justify-center">
                   <FaCheck size={20} />
                 </div>
               </div>
@@ -233,7 +238,7 @@ const BentooGrid = () => {
 
                 <div>
                   <h4 className="text-xs font-bold text-foreground uppercase tracking-wider mb-3 flex items-center gap-2">
-                    <span className="w-2 h-2 bg-green-500 rounded-full shadow-[0_0_8px_rgba(34,197,94,0.5)]" />
+                    <span className="w-2 h-2 bg-green-500 rounded-full" />
                     Key Strengths
                   </h4>
                   <ul className="space-y-2.5">
@@ -252,7 +257,7 @@ const BentooGrid = () => {
 
                 <div>
                   <h4 className="text-xs font-bold text-foreground uppercase tracking-wider mb-3 flex items-center gap-2">
-                    <span className="w-2 h-2 bg-accent rounded-full shadow-[0_0_8px_rgba(var(--accent),0.5)]" />
+                    <span className="w-2 h-2 bg-accent rounded-full" />
                     Areas for Improvement
                   </h4>
                   <ul className="space-y-2.5">

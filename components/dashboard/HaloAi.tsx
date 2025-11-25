@@ -213,14 +213,16 @@ const HaloAi = () => {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3 }}
-              className={`flex ${message.role === "user" ? "justify-end" : "justify-start"
-                }`}
+              className={`flex ${
+                message.role === "user" ? "justify-end" : "justify-start"
+              }`}
             >
               <div
-                className={`${message.role === "user"
+                className={`${
+                  message.role === "user"
                     ? "bg-accent text-accent-foreground rounded-br-none"
                     : "bg-card border border-border text-foreground rounded-bl-none"
-                  } px-4 py-3 rounded-lg`}
+                } px-4 py-3 rounded-lg`}
                 style={{ maxWidth: "90%" }}
               >
                 <p className="text-sm md:text-base whitespace-pre-wrap wrap-break-word">

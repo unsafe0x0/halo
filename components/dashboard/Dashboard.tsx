@@ -36,98 +36,105 @@ const Dashboard = () => {
       <Sidebar activeItem={activeItem} setActiveItem={setActiveItem} />
 
       <main className="flex-1 lg:ml-0 overflow-hidden">
-        {isLoading && <div>Loading...</div>}
-        {error && <div>Error loading data</div>}
-
-        <AnimatePresence mode="wait">
-          {activeItem === "Dashboard" && (
-            <motion.div
-              key="dashboard"
-              initial="hidden"
-              animate="visible"
-              exit="hidden"
-              variants={fadeIn}
-              className="h-full overflow-scroll"
-            >
-              <DashboardTab
-                interviews={data?.user?.interviews || []}
-                scores={data?.scores || []}
-                dates={data?.dates || []}
-              />
-            </motion.div>
-          )}
-          {activeItem === "Interviews" && (
-            <motion.div
-              key="interviews"
-              initial="hidden"
-              animate="visible"
-              exit="hidden"
-              variants={fadeIn}
-              className="h-full overflow-scroll"
-            >
-              <InterviewsTab interviews={data?.user?.interviews || []} />
-            </motion.div>
-          )}
-          {activeItem === "Analytics" && (
-            <motion.div
-              key="analytics"
-              initial="hidden"
-              animate="visible"
-              exit="hidden"
-              variants={fadeIn}
-              className="h-full overflow-scroll"
-            >
-              <AnalyticsTab
-                scores={data?.scores || []}
-                dates={data?.dates || []}
-              />
-            </motion.div>
-          )}
-          {activeItem === "Halo AI" && (
-            <motion.div
-              key="halo-ai"
-              initial="hidden"
-              animate="visible"
-              exit="hidden"
-              variants={fadeIn}
-              className="h-full"
-            >
-              <HaloAi />
-            </motion.div>
-          )}
-          {activeItem === "Whiteboard" && (
-            <motion.div
-              key="whiteboard"
-              initial="hidden"
-              animate="visible"
-              exit="hidden"
-              variants={fadeIn}
-              className="h-full"
-            >
-              <WhiteBoard />
-            </motion.div>
-          )}
-          {activeItem === "Settings" && (
-            <motion.div
-              key="settings"
-              initial="hidden"
-              animate="visible"
-              exit="hidden"
-              variants={fadeIn}
-              className="h-full"
-            >
-              <SettingsTab
-                userDetails={{
-                  name: data?.user?.name,
-                  email: data?.user?.email,
-                  profileImage: data?.user?.profileImage,
-                  githubUsername: data?.user?.githubUsername,
-                  apiKey: data?.user?.apiKey,
-                }}
-              />
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {isLoading ? (
+          <div className="flex items-center justify-center h-full">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent"></div>
+          </div>
+        ) : error ? (
+          <div className="flex items-center justify-center h-full text-red-500">
+            Error loading data
+          </div>
+        ) : (
+          <AnimatePresence mode="wait">
+            {activeItem === "Dashboard" && (
+              <motion.div
+                key="dashboard"
+                initial="hidden"
+                animate="visible"
+                exit="hidden"
+                variants={fadeIn}
+                className="h-full overflow-scroll"
+              >
+                <DashboardTab
+                  interviews={data?.user?.interviews || []}
+                  scores={data?.scores || []}
+                  dates={data?.dates || []}
+                />
+              </motion.div>
+            )}
+            {activeItem === "Interviews" && (
+              <motion.div
+                key="interviews"
+                initial="hidden"
+                animate="visible"
+                exit="hidden"
+                variants={fadeIn}
+                className="h-full overflow-scroll"
+              >
+                <InterviewsTab interviews={data?.user?.interviews || []} />
+              </motion.div>
+            )}
+            {activeItem === "Analytics" && (
+              <motion.div
+                key="analytics"
+                initial="hidden"
+                animate="visible"
+                exit="hidden"
+                variants={fadeIn}
+                className="h-full overflow-scroll"
+              >
+                <AnalyticsTab
+                  scores={data?.scores || []}
+                  dates={data?.dates || []}
+                />
+              </motion.div>
+            )}
+            {activeItem === "Halo AI" && (
+              <motion.div
+                key="halo-ai"
+                initial="hidden"
+                animate="visible"
+                exit="hidden"
+                variants={fadeIn}
+                className="h-full"
+              >
+                <HaloAi />
+              </motion.div>
+            )}
+            {activeItem === "Whiteboard" && (
+              <motion.div
+                key="whiteboard"
+                initial="hidden"
+                animate="visible"
+                exit="hidden"
+                variants={fadeIn}
+                className="h-full"
+              >
+                <WhiteBoard />
+              </motion.div>
+            )}
+            {activeItem === "Settings" && (
+              <motion.div
+                key="settings"
+                initial="hidden"
+                animate="visible"
+                exit="hidden"
+                variants={fadeIn}
+                className="h-full"
+              >
+                <SettingsTab
+                  userDetails={{
+                    name: data?.user?.name,
+                    email: data?.user?.email,
+                    profileImage: data?.user?.profileImage,
+                    githubUsername: data?.user?.githubUsername,
+                    apiKey: data?.user?.apiKey,
+                  }}
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        )}
       </main>
     </div>
   );

@@ -25,7 +25,10 @@ const AnalyticsTab = ({ scores = [], dates = [] }: AnalyticsTabProps) => {
           </p>
         </motion.div>
 
-        <motion.div variants={fadeInUp} className="bg-card border border-border rounded-lg">
+        <motion.div
+          variants={fadeInUp}
+          className="bg-card border border-border rounded-lg"
+        >
           {scores.length > 0 && dates.length > 0 ? (
             <Chart dates={dates} scoreData={scores} />
           ) : (

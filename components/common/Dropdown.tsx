@@ -71,7 +71,7 @@ const Dropdown = ({
         />
       </button>
       {open && (
-        <div className="absolute left-0 mt-2 w-full bg-card border border-border rounded-md shadow-lg z-10 max-h-64 overflow-y-auto">
+        <div className="absolute left-0 mt-2 w-full bg-card border border-border rounded-md z-10 max-h-64 overflow-y-auto">
           {items.length === 0 ? (
             <div className="px-4 py-2 text-foreground text-sm">No items</div>
           ) : (

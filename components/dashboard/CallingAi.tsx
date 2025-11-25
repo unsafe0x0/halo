@@ -33,8 +33,9 @@ const CallingAi: React.FC<CallingAiProps> = ({
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const synthRef = useRef<SpeechSynthesisUtterance | null>(null);
   const recognitionRef = useRef<any>(null);
+  const [pendingText, setPendingText] = useState("");
+  const accumulatedInputRef = useRef<string>("");
   const pendingTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const pendingInputRef = useRef<string | null>(null);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -170,32 +171,36 @@ const CallingAi: React.FC<CallingAiProps> = ({
   const handleSendMessage = (userInput: string) => {
     if (!userInput.trim()) return;
 
-    const userMessage: Message = {
-      id: Date.now().toString(),
-      role: "user",
-      content: userInput,
-    };
-
-    setMessages((prev) => [...prev, userMessage]);
+    accumulatedInputRef.current += (accumulatedInputRef.current ? " " : "") + userInput;
+    setPendingText(accumulatedInputRef.current);
     setTranscript("");
-    pendingInputRef.current = userInput;
+
     if (pendingTimeoutRef.current) {
       clearTimeout(pendingTimeoutRef.current);
     }
+
     pendingTimeoutRef.current = setTimeout(() => {
-      if (pendingInputRef.current) {
-        sendMessage.mutate(pendingInputRef.current);
-        pendingInputRef.current = null;
+      if (accumulatedInputRef.current.trim()) {
+        const content = accumulatedInputRef.current.trim();
+
+        if (recognitionRef.current && listening) {
+          recognitionRef.current.stop();
+        }
+
+        const userMessage: Message = {
+          id: Date.now().toString(),
+          role: "user",
+          content: content,
+        };
+
+        setMessages((prev) => [...prev, userMessage]);
+        sendMessage.mutate(content);
+
+        accumulatedInputRef.current = "";
+        setPendingText("");
       }
       pendingTimeoutRef.current = null;
-    }, 3000);
-
-    if (recognitionRef.current && listening) {
-      recognitionRef.current.stop();
-      setTimeout(() => {
-        recognitionRef.current?.start();
-      }, 100);
-    }
+    }, 2000);
   };
 
   const sendIntroPrompt = () => {
@@ -246,7 +251,8 @@ const CallingAi: React.FC<CallingAiProps> = ({
       clearTimeout(pendingTimeoutRef.current);
       pendingTimeoutRef.current = null;
     }
-    pendingInputRef.current = null;
+    accumulatedInputRef.current = "";
+    setPendingText("");
     onCallEnd(messages);
   };
 
@@ -341,14 +347,16 @@ const CallingAi: React.FC<CallingAiProps> = ({
             <div ref={messagesEndRef} />
           </div>
 
-          {transcript && (
+          {(transcript || pendingText) && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               className="border-t border-border bg-card p-3 md:p-4"
             >
               <p className="text-xs text-foreground-1 mb-1">Live Transcript:</p>
-              <p className="text-sm text-foreground">{transcript}</p>
+              <p className="text-sm text-foreground">
+                {pendingText} {transcript}
+              </p>
             </motion.div>
           )}
 

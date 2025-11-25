@@ -120,7 +120,10 @@ const InterviewsTab: React.FC<InterviewsTabProps> = ({ interviews }) => {
             variants={staggerContainer}
             className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6"
           >
-            <motion.div variants={fadeInUp} className="bg-card border border-border rounded-lg p-6">
+            <motion.div
+              variants={fadeInUp}
+              className="bg-card border border-border rounded-lg p-6"
+            >
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-foreground-1 text-sm mb-1">
@@ -134,7 +137,10 @@ const InterviewsTab: React.FC<InterviewsTabProps> = ({ interviews }) => {
               </div>
             </motion.div>
 
-            <motion.div variants={fadeInUp} className="bg-card border border-border rounded-lg p-6">
+            <motion.div
+              variants={fadeInUp}
+              className="bg-card border border-border rounded-lg p-6"
+            >
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-foreground-1 text-sm mb-1">
@@ -143,11 +149,11 @@ const InterviewsTab: React.FC<InterviewsTabProps> = ({ interviews }) => {
                   <p className="text-3xl font-bold text-foreground">
                     {interviews.length > 0
                       ? (
-                        interviews.reduce(
-                          (sum, interview) => sum + interview.score,
-                          0,
-                        ) / interviews.length
-                      ).toFixed(1)
+                          interviews.reduce(
+                            (sum, interview) => sum + interview.score,
+                            0,
+                          ) / interviews.length
+                        ).toFixed(1)
                       : "0"}
                   </p>
                 </div>
@@ -155,7 +161,10 @@ const InterviewsTab: React.FC<InterviewsTabProps> = ({ interviews }) => {
               </div>
             </motion.div>
 
-            <motion.div variants={fadeInUp} className="bg-card border border-border rounded-lg p-6">
+            <motion.div
+              variants={fadeInUp}
+              className="bg-card border border-border rounded-lg p-6"
+            >
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-foreground-1 text-sm mb-1">Best Score</p>

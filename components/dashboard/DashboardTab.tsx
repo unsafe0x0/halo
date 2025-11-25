@@ -52,9 +52,12 @@ const DashboardTab = ({
         <div className="flex flex-col gap-6">
           <motion.div
             variants={staggerContainer}
-            className="grid grid-cols-1 md:grid-cols-3 gap-4"
+            className="grid grid-cols-1 md:grid-cols-3 gap-4 items-stretch"
           >
-            <motion.div variants={fadeInUp} className="bg-card border border-border rounded-lg p-6">
+            <motion.div
+              variants={fadeInUp}
+              className="bg-card border border-border rounded-lg p-6"
+            >
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-foreground-1 text-sm mb-1">
@@ -68,7 +71,10 @@ const DashboardTab = ({
               </div>
             </motion.div>
 
-            <motion.div variants={fadeInUp} className="bg-card border border-border rounded-lg p-6">
+            <motion.div
+              variants={fadeInUp}
+              className="bg-card border border-border rounded-lg p-6"
+            >
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-foreground-1 text-sm mb-1">
@@ -87,7 +93,10 @@ const DashboardTab = ({
               </div>
             </motion.div>
 
-            <motion.div variants={fadeInUp} className="bg-card border border-border rounded-lg p-6">
+            <motion.div
+              variants={fadeInUp}
+              className="bg-card border border-border rounded-lg p-6"
+            >
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-foreground-1 text-sm mb-1">Best Score</p>
@@ -107,10 +116,10 @@ const DashboardTab = ({
             {recentInterviews.length > 0 ? (
               <motion.div
                 variants={staggerContainer}
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 items-stretch"
               >
                 {recentInterviews.map((interview) => (
-                  <motion.div key={interview.interviewId} variants={fadeInUp}>
+                  <motion.div key={interview.interviewId} variants={fadeInUp} className="h-full">
                     <InterviewCard
                       model={interview.model}
                       position={interview.position}

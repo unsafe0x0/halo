@@ -1,7 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
-import { BsSun, BsMoon } from "react-icons/bs";
+import { LuSun } from "react-icons/lu";
+import { LuMoon } from "react-icons/lu";
 import { IoDesktop } from "react-icons/io5";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -20,13 +21,13 @@ const ThemeToggler = ({ isCollapsed = false }: ThemeTogglerProps) => {
   if (!mounted) return null;
 
   const themes = [
-    { value: "light", label: "Light", icon: BsSun },
-    { value: "dark", label: "Dark", icon: BsMoon },
+    { value: "light", label: "Light", icon: LuSun },
+    { value: "dark", label: "Dark", icon: LuMoon },
     { value: "system", label: "System", icon: IoDesktop },
   ];
 
   const currentTheme = themes.find((t) => t.value === theme);
-  const CurrentIcon = currentTheme?.icon || BsSun;
+  const CurrentIcon = currentTheme?.icon || LuSun;
 
   const handleCycleTheme = () => {
     const currentIndex = themes.findIndex((t) => t.value === theme);

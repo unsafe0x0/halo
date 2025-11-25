@@ -6,7 +6,12 @@ import Button from "@/components/common/Button";
 import { HiLightningBolt } from "react-icons/hi";
 import MockDashboard from "./MockDashboard";
 import { motion } from "framer-motion";
-import { fadeIn, fadeInUp, staggerContainer, scaleIn } from "@/utils/animations";
+import {
+  fadeIn,
+  fadeInUp,
+  staggerContainer,
+  scaleIn,
+} from "@/utils/animations";
 
 const HeroSection = () => {
   return (
@@ -62,10 +67,7 @@ const HeroSection = () => {
           </motion.div>
         </div>
 
-        <motion.div
-          variants={scaleIn}
-          className="relative mx-auto max-w-5xl"
-        >
+        <motion.div variants={scaleIn} className="relative mx-auto max-w-5xl">
           <div className="absolute -inset-1 bg-gradient-to-r from-accent to-accent-hover rounded-2xl blur opacity-20" />
 
           <div className="relative rounded-xl border border-border/50 bg-background/50 backdrop-blur-xl overflow-hidden">
@@ -80,7 +82,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.8, duration: 0.5 }}
-            className="absolute -left-4 md:-left-12 top-1/4 p-3 bg-card border border-border rounded-xl shadow-lg flex items-center gap-3 animate-bounce-slow hidden md:flex"
+            className="absolute -left-4 md:-left-12 top-1/4 p-3 bg-card border border-border rounded-xl flex items-center gap-3 animate-bounce-slow hidden md:flex"
           >
             <div className="w-10 h-10 bg-green-500/10 rounded-full flex items-center justify-center text-green-500">
               <svg
@@ -107,7 +109,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 1, duration: 0.5 }}
-            className="absolute -right-4 md:-right-12 bottom-1/4 p-3 bg-card border border-border rounded-xl shadow-lg flex items-center gap-3 animate-bounce-slow delay-700 hidden md:flex"
+            className="absolute -right-4 md:-right-12 bottom-1/4 p-3 bg-card border border-border rounded-xl flex items-center gap-3 animate-bounce-slow delay-700 hidden md:flex"
           >
             <div className="w-10 h-10 bg-accent/10 rounded-full flex items-center justify-center text-accent">
               <HiLightningBolt size={20} />

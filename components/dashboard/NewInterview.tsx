@@ -94,7 +94,7 @@ const NewInterview: React.FC<NewInterviewDialogProps> = ({
             animate="visible"
             exit="hidden"
             variants={scaleIn}
-            className="bg-card border border-border rounded-lg p-6 md:p-8 w-full max-w-md mx-4 shadow-lg"
+            className="bg-card border border-border rounded-lg p-6 md:p-8 w-full max-w-md mx-4"
           >
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-2xl font-bold text-foreground">
@@ -170,7 +170,11 @@ const NewInterview: React.FC<NewInterviewDialogProps> = ({
             </div>
 
             <div className="flex gap-3">
-              <Button variant="primary" onClick={handleStart} className="w-full">
+              <Button
+                variant="primary"
+                onClick={handleStart}
+                className="w-full"
+              >
                 Start Interview
               </Button>
             </div>

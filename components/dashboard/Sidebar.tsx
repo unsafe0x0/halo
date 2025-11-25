@@ -47,10 +47,11 @@ const RenderSidebarItem = ({
   return (
     <button
       onClick={onClick}
-      className={`flex items-center gap-3 w-full px-4 py-3 rounded-lg font-medium transition-colors ${isActive
-        ? "bg-accent text-accent-foreground"
-        : "text-foreground hover:bg-card"
-        } ${isCollapsed ? "justify-center" : ""}`}
+      className={`flex items-center gap-3 w-full px-4 py-3 rounded-lg font-medium transition-colors ${
+        isActive
+          ? "bg-accent text-accent-foreground"
+          : "text-foreground hover:bg-card"
+      } ${isCollapsed ? "justify-center" : ""}`}
       title={isCollapsed ? label : ""}
     >
       <span className="shrink-0">
@@ -81,8 +82,9 @@ const RenderLogoutButton = ({
     <Button
       variant="destructive"
       size="medium"
-      className={`w-full flex items-center gap-3 ${isCollapsed ? "justify-center" : "justify-start"
-        }`}
+      className={`w-full flex items-center gap-3 ${
+        isCollapsed ? "justify-center" : "justify-start"
+      }`}
       onClick={onClick}
     >
       <span className="shrink-0">
@@ -180,9 +182,7 @@ const RenderUserCard = ({ isCollapsed }: { isCollapsed: boolean }) => {
           <p className="text-sm font-semibold text-foreground truncate">
             {user?.name || "User"}
           </p>
-          <p className="text-xs text-foreground-1 truncate">
-            {user?.email}
-          </p>
+          <p className="text-xs text-foreground-1 truncate">{user?.email}</p>
         </motion.div>
       </div>
     </div>
@@ -219,8 +219,9 @@ const Sidebar = ({ activeItem = "Dashboard", setActiveItem }: SidebarProps) => {
 
       <motion.aside
         layout
-        className={`fixed lg:static top-0 left-0 h-screen lg:h-screen bg-background border-r border-border z-50 flex flex-col ${isSidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
-          } ${isCollapsed ? "lg:w-20" : "lg:w-64"} max-w-64 transition-all duration-300 ease-in-out`}
+        className={`fixed lg:static top-0 left-0 h-screen lg:h-screen bg-background border-r border-border z-50 flex flex-col ${
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
+        } ${isCollapsed ? "lg:w-20" : "lg:w-64"} max-w-64 transition-all duration-300 ease-in-out`}
       >
         <div className="hidden lg:flex items-center justify-between px-4 py-2 border-b border-border h-fit">
           <AnimatePresence>

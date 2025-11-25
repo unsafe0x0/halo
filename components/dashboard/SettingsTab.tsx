@@ -106,7 +106,11 @@ const SettingsTab = ({ userDetails }: SettingsTabProps) => {
         </div>
       </motion.div>
 
-      <motion.form variants={fadeInUp} onSubmit={handleSubmit} className="space-y-6  max-w-md">
+      <motion.form
+        variants={fadeInUp}
+        onSubmit={handleSubmit}
+        className="space-y-6  max-w-md"
+      >
         <Input
           label="Name"
           type="text"

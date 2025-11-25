@@ -1,7 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
-import { BsSun, BsMoon } from "react-icons/bs";
+import { LuSun } from "react-icons/lu";
+import { LuMoon } from "react-icons/lu";
 
 const ToggleTheme = () => {
   const { theme, setTheme } = useTheme();
@@ -18,7 +19,7 @@ const ToggleTheme = () => {
 
   return (
     <button onClick={toggleTheme}>
-      {isDark ? <BsSun size={18} /> : <BsMoon size={18} />}
+      {isDark ? <LuSun size={18} /> : <LuMoon size={18} />}
     </button>
   );
 };
